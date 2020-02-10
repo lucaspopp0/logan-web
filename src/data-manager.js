@@ -12,6 +12,7 @@ let tasks = [];
 async function signIn(googleUser) {
     const idToken = googleUser.getAuthResponse().id_token;
     await establishAuth(idToken);
+    isSignedIn = true;
     await fetchAllData();
 }
 
@@ -92,6 +93,9 @@ async function fetchAllData() {
 }
 
 export default {
+    isSignedIn: function () {
+        return isSignedIn
+    },
     signIn,
     establishAuth,
     fetchCurrentUser,
