@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <g-signin-button></g-signin-button>
+      <g-signin-button @done="authCallback"></g-signin-button>
     </header>
     <main>
       <img src="./assets/logo.png" alt="Vue.js PWA">
@@ -12,7 +12,12 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  methods: {
+    authCallback: function(googleUser) {
+      console.log(googleUser);
+    }
+  }
 }
 </script>
 
