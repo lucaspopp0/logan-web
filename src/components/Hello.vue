@@ -5,15 +5,10 @@
 </template>
 
 <script>
-import DataManager from '../data-manager'
-
 export default {
   name: 'hello',
   data () {
     return {}
-  },
-  mounted () {
-    console.log(this.$refs);
   }
 }
 </script>

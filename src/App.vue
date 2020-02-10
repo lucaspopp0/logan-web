@@ -11,11 +11,16 @@
 </template>
 
 <script>
+import DataManager from './data-manager'
+
 export default {
   name: 'app',
+  mounted () {
+    this.authCallback({ getAuthResponse: () => {return {}} })
+  },
   methods: {
     authCallback: function(googleUser) {
-      console.log(googleUser);
+      DataManager.signIn(googleUser);
     }
   }
 }
