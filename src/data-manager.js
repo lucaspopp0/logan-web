@@ -9,10 +9,19 @@ let semesters = [];
 let assignments = [];
 let tasks = [];
 
+let listeners = [];
+
+function sendEventToListeners(event, data) {
+    for (const listener of listeners) {
+        if (!!listener.dmEvent) listener.dmEvent(event, data);
+    }
+}
+
 async function signIn(googleUser) {
     const idToken = googleUser.getAuthResponse().id_token;
     await establishAuth(idToken);
     isSignedIn = true;
+    sendEventToListeners('signin');
     await fetchAllData();
 }
 
@@ -93,6 +102,17 @@ async function fetchAllData() {
 }
 
 export default {
+    addListener: function(listener) {
+        listeners.push(listener)
+    },
+    removeListener: function(listener) {
+        for (let i = 0;i < listeners.length;i++) {
+            if (listeners[i] === listener) {
+                listeners.splice(i, 1);
+                return;
+            }
+        }
+    },
     isSignedIn: function () {
         return isSignedIn
     },
