@@ -1,9 +1,9 @@
 <div class="list-item task-list-item">
-    <checkbox :checked="task && task.completed"></checkbox>
+    <checkbox :checked="task && task.completed" :color="task.course.color"></checkbox>
     <div class="task-content">
         <div class="task-commitment-container" v-if="!!task.course || !!task.relatedAssignment">
             <!-- Course label -->
-            <span class="task-commitment" v-if="!!task.course" :style="{ color: task.course.color }">{{ task.course.name }}</span>
+            <span class="task-commitment" v-if="!!task.course" :style="{ color: '#' + task.course.color }">{{ task.course.name }}</span>
             <!-- Assignment label -->
             <span class="task-assignment" v-if="!!task.relatedAssignment">{{ task.relatedAssignment.title }}</span>
         </div>

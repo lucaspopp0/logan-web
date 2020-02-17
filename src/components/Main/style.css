@@ -11,6 +11,7 @@ body {
 .navbar {
   height: 56px;
   background: rgb(0, 150, 136);
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
 }
 
 .view {
@@ -32,12 +33,22 @@ body {
   display: inline-block !important;
 }
 
+.panel:not(:last-child) {
+  border-right: solid 1px #e0e0e0;
+}
+
 .list {
+  overflow-y: scroll;
+}
+
+.list.small-list {
   width: 24vw;
   min-width: 300px;
   max-width: 380px;
-  border-right: solid 1px #e0e0e0;
-  overflow-y: scroll;
+}
+
+.list.large-list {
+  width: 60vw;
 }
 
 .list-detail {
