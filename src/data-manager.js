@@ -18,9 +18,12 @@ function sendEventToListeners(event, data) {
 }
 
 async function signIn(googleUser) {
-    const idToken = googleUser.getAuthResponse().id_token;
+    // const idToken = googleUser.getAuthResponse().id_token;
+    const idToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc2MmZhNjM3YWY5NTM1OTBkYjhiYjhhNjM2YmYxMWQ0MzYwYWJjOTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMjYxMTMyNjE4OTg1LW00ZWI5aHV1cW9zZmRkaWJnMTdqZ201MGQ2OWcwa2kzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMjYxMTMyNjE4OTg1LW00ZWI5aHV1cW9zZmRkaWJnMTdqZ201MGQ2OWcwa2kzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAxNjI2MDYyNjUxNzI2NDAwMzk4IiwiaGQiOiJjYXNlLmVkdSIsImVtYWlsIjoibG1wMTIyQGNhc2UuZWR1IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiI2TzY5NUUybjA4cXYxUU9oZW5sNnVnIiwibmFtZSI6Ikx1Y2FzIFBvcHAiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FBdUU3bUMzZnNrSWtKMkNTbEZ2RjUyVXBjdHg3YjFtY0tIY181Y28zQzNyQ0E9czk2LWMiLCJnaXZlbl9uYW1lIjoiTHVjYXMiLCJmYW1pbHlfbmFtZSI6IlBvcHAiLCJsb2NhbGUiOiJlbiIsImlhdCI6MTU4MTk1MzE1MiwiZXhwIjoxNTgxOTU2NzUyLCJqdGkiOiIzMGQzZmEyNTA2OWIwOTM4OWE0ODYzZjM0MWY2YWFlYTk4ZjAzZTYxIn0.Xno0ssPRIXocUWZCn0iT8wXb6bBmqK3NNX6jtHbmGedSWzCAwg5ZNq6lpBpzc0DAi9964QJ_rIpXjW8OEUa64mK5RidNBIqdsITA0pQtN0LcKA4JibWDAMrMTvYa99CkAWKhUSGyJlk0_sc4Fwe_9lz4ICYs0hzVlEIFbWv5Go4C39_hwg2MuVDvVyrFriauatBo2xlm51qXAIshrdYT4N3fUaDujaiZxEZh-bJUPA9cvxIaXkTvBaX36Qmki9JwAI_jwChWUJ6gC9GM0aZRgykFpf0rYv5TgLx5yG-EkksTddmK4KnLBun3TMRw7B0HFOAnvSB2QpHqD8jq4YXS-Q';
+    console.log('signing in');
     await establishAuth(idToken);
     isSignedIn = true;
+    console.log('signed in');
     sendEventToListeners('signin');
     await fetchAllData();
 }
@@ -99,6 +102,8 @@ async function fetchAllData() {
     semesters = tempSemesters;
     assignments = tempAssignments;
     tasks = tempTasks;
+
+    sendEventToListeners('fetch-complete');
 }
 
 export default {
@@ -119,5 +124,6 @@ export default {
     signIn,
     establishAuth,
     fetchCurrentUser,
-    fetchAllData
+    fetchAllData,
+    getTasks: () => tasks
 }

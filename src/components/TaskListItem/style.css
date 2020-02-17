@@ -1,0 +1,47 @@
+.task-list-item {
+    border-bottom: solid 1px #e0e0e0;
+    padding: 12px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    user-select: none;
+    background: white;
+}
+
+.task-list-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.task-content {
+    margin-left: 10px;
+    font-size: 1em;
+    line-height: 1.2em;
+}
+
+.task-title {
+    line-height: 1.5em;
+}
+
+.task-commitment-container {
+    font-size: 0.8em;
+}
+
+.task-deadline, .task-description {
+    font-size: 0.9em;
+}
+
+.task-deadline, .task-description, .task-assignment {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.task-commitment {
+    font-weight: bold;
+}
+
+.task-commitment + .task-assignment::before {
+    content: "/ ";
+}
+
+.task-content p {
+    margin-bottom: 0px;
+}

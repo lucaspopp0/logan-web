@@ -1,21 +1,22 @@
 body {
-    margin: 0;
-  }
-  
-  #app {
-    font-family: Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  .navbar {
-    height: 56px;
-  }
-  
-  .main {
-    position: absolute;
-    top: 56px;
-    left: 0px;
-    width: 100%;
-    height: calc(100% - 56px);
-  }
+  margin: 0;
+}
+
+#main {
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.navbar {
+  height: 56px;
+  background: rgb(0, 150, 136);
+}
+
+.view {
+  position: absolute;
+  top: 56px;
+  left: 0px;
+  width: 100%;
+  height: calc(100% - 56px);
+}

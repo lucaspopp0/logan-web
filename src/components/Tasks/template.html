@@ -1,3 +1,6 @@
-<div class="tasks">
-    
+<div id="tasks">
+    <div id="task-list" class="panel">
+        <task-list-item v-for="(task, index) in tasks" :key="task.id" :task="task"></task-list-item>
+    </div>
+    <div id="task-detail" class="panel"></div>
 </div>

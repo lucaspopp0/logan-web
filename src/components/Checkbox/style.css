@@ -1,0 +1,13 @@
+.checkbox {
+    display: inline-block;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: solid 1px black;
+    outline: none;
+}
+
+.checkbox:checked {
+    background: radial-gradient(circle at center, black 0%, black 48.5%, rgba(0, 0, 0, 0) 51.5%, rgba(0, 0, 0, 0) 100%);
+}

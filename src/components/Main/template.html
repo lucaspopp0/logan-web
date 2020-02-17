@@ -1,5 +1,5 @@
 <div id="main">
-    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-info">
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark">
         <a class="navbar-brand" href="#">Logan</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -19,7 +19,7 @@
         </div>
         <div class="form-inline">
             <template v-if="isSignedIn">
-                <a class="btn btn-light">Sync</a>
+                <a class="btn btn-light" v-on:click="sync">Sync</a>
                 <div class="dropdown">
                     <a class="btn btn-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Lucas Popp

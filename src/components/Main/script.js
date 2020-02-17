@@ -4,11 +4,13 @@ export default {
   name: 'app',
   data() { 
     return {
-      isSignedIn: true
+      isSignedIn: false
     } 
   },
   mounted() {
     DataManager.addListener(this);
+    // TODO: Remove for prod
+    DataManager.signIn();
   },
   beforeDestroy() {
     DataManager.removeListener(this);
@@ -19,6 +21,9 @@ export default {
     },
     dmEvent: function(event, data) {
       if (event == 'signin') this.isSignedIn = DataManager.isSignedIn();
+    },
+    sync() {
+      DataManager.fetchAllData();
     }
   }
 }
