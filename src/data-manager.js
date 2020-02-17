@@ -129,5 +129,6 @@ export default {
     establishAuth,
     fetchCurrentUser,
     fetchAllData,
-    getTasks: () => tasks
+    getTasks: () => tasks,
+    getSemesters: () => semesters
 }
