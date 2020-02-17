@@ -1,4 +1,4 @@
-import Checkbox from '@/components/Checkbox'
+import Checkbox from '@/components/Controls/Checkbox'
 
 export default {
     name: 'task-list-item',
