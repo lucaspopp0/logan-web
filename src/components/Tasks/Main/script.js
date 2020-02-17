@@ -11,10 +11,14 @@ export default {
     },
     mounted() {
         DataManager.addListener(this);
-        DataManager.fetchAllData()
-        .then(() => {
-            this.updateTasks()
-        })
+        if (DataManager.needsFetch()) {
+            DataManager.fetchAllData()
+            .then(() => {
+                this.updateTasks()
+            })
+        } else {
+            this.updateTasks();
+        }
     },
     beforeDestroy() {
         DataManager.removeListener(this);

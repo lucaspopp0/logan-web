@@ -1,0 +1,16 @@
+#course-detail-view {
+    flex-direction: column;
+}
+
+.section {
+    padding: 12px;
+}
+
+#basic-info {
+    border-bottom: solid 1px #e0e0e0;
+}
+
+#sections-container {
+    flex-grow: 1;
+    display: flex;
+}
