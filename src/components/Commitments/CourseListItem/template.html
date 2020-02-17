@@ -1,0 +1,10 @@
+<div class="course-list-item">
+    <div class="course-color" :style="{ background: '#' + course.color }"></div>
+    <div class="course-content">
+        <!-- Name -->
+        <a class="course-name">{{ course.name }}</a>
+
+        <!-- Descriptor -->
+        <a class="course-descriptor" v-if="!!course.descriptor">{{ course.descriptor }}</a>
+    </div>
+</div>

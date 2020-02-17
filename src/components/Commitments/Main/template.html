@@ -1,0 +1,9 @@
+<div id="commitments" class="fullheight">
+    <div id="commitment-list" class="panel list">
+        <template v-for="semester in semesters">
+            <semester-list-item :semester="semester" :key="semester.sid"></semester-list-item>
+            <course-list-item v-for="course in semester.courses" :key="course.cid" :course="course"></course-list-item>
+        </template>
+    </div>
+    <div id="commitment-detail" class="panel list-detail"></div>
+</div>

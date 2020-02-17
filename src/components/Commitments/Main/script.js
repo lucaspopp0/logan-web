@@ -1,33 +1,34 @@
 import Vue from 'vue';
-import DataManager from '../../data-manager';
-import TaskListItem from '../TaskListItem';
+import DataManager from '@/data-manager';
+import SemesterListItem from '../SemesterListItem';
+import CourseListItem from '../CourseListItem';
 
 export default {
-    name: 'tasks',
+    name: 'commitments',
     data() {
         return {
-            tasks: []
+            semesters: []
         }
     },
     mounted() {
         DataManager.addListener(this);
         DataManager.fetchAllData()
         .then(() => {
-            this.updateTasks()
+            this.updateData()
         })
     },
     beforeDestroy() {
         DataManager.removeListener(this);
     },
     methods: {
-        updateTasks() {
-            Vue.set(this, 'tasks', DataManager.getTasks());
+        updateData() {
+            Vue.set(this, 'semesters', DataManager.getSemesters());
         },
         dmEvent(event, data) {
             if (event === 'fetch-complete') {
-                this.updateTasks();
+                this.updateData();
             }
         }
     },
-    components: { TaskListItem }
+    components: { SemesterListItem, CourseListItem }
 }
