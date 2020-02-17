@@ -1,5 +1,8 @@
 <select class="course-select" v-model="value.cid">
-    <optgroup v-for="semester of semesters" :key="semester.sid" :label="semester.name">
+    <option value="none">None</option>
+    <template v-for="semester of semesters">
+        <option disabled></option>
+        <option :value="semester.sid" disabled>{{ semester.name }}</option>
         <option v-for="course of semester.courses" :key="course.cid" :value="course.cid">{{ course.name }}</option>
-    </optgroup>
+    </template>
 </select>

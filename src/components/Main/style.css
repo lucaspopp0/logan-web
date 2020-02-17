@@ -2,9 +2,18 @@
 
 body {
     margin: 0;
+    font-size: 11pt;
 }
 
-input[type="text"], textarea {
+.input-container {
+    margin-bottom: 5px;
+}
+
+.input-container > input, .input-container > textarea {
+    width: 100%;
+}
+
+input, textarea {
     appearance: none;
     border: none;
     background: rgba(0, 0, 0, 0.015);
@@ -13,7 +22,7 @@ input[type="text"], textarea {
     resize: none;
 }
 
-input[type="text"] {
+input {
     padding: 2px 7px;
 }
 
@@ -21,13 +30,13 @@ textarea {
     padding: 5px 7px;
 }
 
-input[type="text"]:hover, textarea:hover,
-input[type="text"]:active, textarea:active {
+input:hover, textarea:hover,
+input:active, textarea:active {
     background: rgba(0, 0, 0, 0.05);
     resize: vertical;
 }
 
-input[type="text"]:focus, textarea:focus {
+input:focus, textarea:focus {
     background: rgba(0, 0, 0, 0.075);
 }
 

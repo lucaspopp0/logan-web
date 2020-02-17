@@ -5,7 +5,11 @@
         <input id="descriptor-input" type="text" :value="course.descriptor" placeholder="Descriptor (ex: ECON 101)">
     </div>
     <div id="sections-container">
-        <div class="panel list small-list"></div>
-        <div class="panel list-detail"></div>
+        <div class="panel list small-list">
+            <section-list-item v-for="section of course.sections" :key="section.secid" :section="section"></section-list-item>
+        </div>
+        <div class="panel list-detail">
+            <section-detail-view></section-detail-view>
+        </div>
     </div>
 </div>
