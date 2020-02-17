@@ -2,6 +2,9 @@ import Vue from 'vue'
 import axios from 'axios'
 import api from './api'
 
+const SIGNIN = 'signin';
+const FETCH_COMPLETE = 'fetch-complete';
+
 let currentUser;
 let isSignedIn = false;
 let needsFetch = true;
@@ -20,10 +23,10 @@ function sendEventToListeners(event, data) {
 
 async function signIn(googleUser) {
     // const idToken = googleUser.getAuthResponse().id_token;
-    const idToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc2MmZhNjM3YWY5NTM1OTBkYjhiYjhhNjM2YmYxMWQ0MzYwYWJjOTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMjYxMTMyNjE4OTg1LW00ZWI5aHV1cW9zZmRkaWJnMTdqZ201MGQ2OWcwa2kzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMjYxMTMyNjE4OTg1LW00ZWI5aHV1cW9zZmRkaWJnMTdqZ201MGQ2OWcwa2kzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAxNjI2MDYyNjUxNzI2NDAwMzk4IiwiaGQiOiJjYXNlLmVkdSIsImVtYWlsIjoibG1wMTIyQGNhc2UuZWR1IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJhMFRrQ3Y5MFZPV0VWRWF3VlZPV2hRIiwibmFtZSI6Ikx1Y2FzIFBvcHAiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FBdUU3bUMzZnNrSWtKMkNTbEZ2RjUyVXBjdHg3YjFtY0tIY181Y28zQzNyQ0E9czk2LWMiLCJnaXZlbl9uYW1lIjoiTHVjYXMiLCJmYW1pbHlfbmFtZSI6IlBvcHAiLCJsb2NhbGUiOiJlbiIsImlhdCI6MTU4MTk2MzA1MSwiZXhwIjoxNTgxOTY2NjUxLCJqdGkiOiIzYzNmNGE1Zjk4NmY3M2I5MjZiZTEyMGU4ODVjNjkyN2Y3NDBlMTA1In0.q5WyleXSsV5VwmBqw5EMMttpCFp68X3H0pKS-ZPrmViyh84O9bljyPYZpkFlHRJxSQ1BMeXQNw-_964nMBqoLwM2xOoN8lO14ZLRXueJ4zPn4Hyqpt35c5oR2Y_wY1sWHeGyzwQPxidW19hxGdeFtdtZOtIY-xP0OIWTZmnBSEBYpK1lmMNzPF3nKURwg__2lG8SVC4Oe6P33c5QTMMuK3Rk_GLowJsv1EAnJaVczdN_FqsP0XwEgZwo3Z1CWQ3KaG-jHsQjBuB4Mbuyl_vZYGy8YqVr7V_waLdQWRbZgIkYDYOPu8qkU2hhsx92ULdqI-DGGZiIiwsLk4E_sFX7Kg';
+    const idToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc2MmZhNjM3YWY5NTM1OTBkYjhiYjhhNjM2YmYxMWQ0MzYwYWJjOTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMjYxMTMyNjE4OTg1LW00ZWI5aHV1cW9zZmRkaWJnMTdqZ201MGQ2OWcwa2kzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMjYxMTMyNjE4OTg1LW00ZWI5aHV1cW9zZmRkaWJnMTdqZ201MGQ2OWcwa2kzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAxNjI2MDYyNjUxNzI2NDAwMzk4IiwiaGQiOiJjYXNlLmVkdSIsImVtYWlsIjoibG1wMTIyQGNhc2UuZWR1IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJ1d09Td3gtc01GWUo3TWV4RVlEZGVRIiwibmFtZSI6Ikx1Y2FzIFBvcHAiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FBdUU3bUMzZnNrSWtKMkNTbEZ2RjUyVXBjdHg3YjFtY0tIY181Y28zQzNyQ0E9czk2LWMiLCJnaXZlbl9uYW1lIjoiTHVjYXMiLCJmYW1pbHlfbmFtZSI6IlBvcHAiLCJsb2NhbGUiOiJlbiIsImlhdCI6MTU4MTk2OTY1MCwiZXhwIjoxNTgxOTczMjUwLCJqdGkiOiI4ZjQ1Yjc4YmM0YzE1MDNiYzhmOThjMzhjMDJhZWRmMTFjZjBhZTg0In0.r8jUeFoFZIxFgRuF7kuClsqWMJPL4i5E1TyQaXMeCsCnNssXtyDK7m98GddfLlYrrACqLnxBDJ4Mg62SyATdhYBbJIFZfF0Knp6J2gfcw4SNQkOBNo5lalEX2Q9KLHb5i8zRS2XU4fZdu7ny7bzyV5MDDMsVz8GiDDu4zG271BLOeToP9oSB5iyS63XTHqFAxr_9QpYyFyy2hhvC2HWp-RLwOw8ypMLYhlr1TsJb_zTwEjQNf1_rNp30z-UTqFkLnnCqDu6ifQs_IpzerFW5oVN-bt9SEwFyfW4o8H6w4X_RyR4Lagvvlc9o3za5rZJBXxTCdXGjOF3ZvkEb2x5DBg';
     await establishAuth(idToken);
     isSignedIn = true;
-    sendEventToListeners('signin');
+    sendEventToListeners(SIGNIN);
     await fetchAllData();
 }
 
@@ -108,7 +111,7 @@ async function fetchAllData() {
 
     needsFetch = false;
 
-    sendEventToListeners('fetch-complete');
+    sendEventToListeners(FETCH_COMPLETE);
 }
 
 export default {
@@ -132,5 +135,6 @@ export default {
     fetchAllData,
     getTasks: () => tasks,
     getSemesters: () => semesters,
-    needsFetch: () => needsFetch
+    needsFetch: () => needsFetch,
+    SIGNIN, FETCH_COMPLETE
 }
