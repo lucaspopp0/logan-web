@@ -53,4 +53,9 @@ body {
   align-items: center;
   user-select: none;
   background: white;
+  color: black;
+}
+
+.list > .list-item.active {
+  background: #90caf9;
 }

@@ -1,8 +1,8 @@
 <div id="commitments" class="fullheight">
     <div id="commitment-list" class="panel list">
         <template v-for="semester in semesters">
-            <semester-list-item :semester="semester" :key="semester.sid" @click.native="selectSemester(semester)"></semester-list-item>
-            <course-list-item v-for="course in semester.courses" :key="course.cid" :course="course" @click.native="selectCourse(course)"></course-list-item>
+            <semester-list-item :semester="semester" :key="semester.sid" @click.native="selectSemester(semester)" :class="{ active: semester == currentSelection.value }"></semester-list-item>
+            <course-list-item v-for="course in semester.courses" :key="course.cid" :course="course" @click.native="selectCourse(course)" :class="{ active: course == currentSelection.value }"></course-list-item>
         </template>
     </div>
     <div id="commitment-detail" class="panel list-detail">
