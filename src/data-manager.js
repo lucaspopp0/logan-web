@@ -74,17 +74,21 @@ async function fetchAllData() {
     }
 
     // Load courses
-    for (const course of tempCourses) {
-        course.sections = [];
-        course.semester = idMap.semesters[course.sid];
-        course.semester.courses.push(course);
-        idMap.courses[course.cid] = course;
+    for (const sid in tempCourses) {
+        for (const course of tempCourses[sid]) {
+            course.sections = [];
+            course.semester = idMap.semesters[sid];
+            course.semester.courses.push(course);
+            idMap.courses[course.cid] = course;
+        }
     }
 
     // Load sections
-    for (const section of tempSections) {
-        section.course = idMap.courses[section.cid];
-        section.course.sections.push(section);
+    for (const cid in tempSections) {
+        for (const section of tempSections[cid]) {
+            section.course = idMap.courses[cid];
+            section.course.sections.push(section);
+        }
     }
 
     // Load assignments
