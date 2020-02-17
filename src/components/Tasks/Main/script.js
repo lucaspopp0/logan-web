@@ -1,12 +1,15 @@
 import Vue from 'vue';
 import DataManager from '@/data-manager';
 import TaskListItem from '../TaskListItem';
+import TaskDetailView from '../TaskDetailView'
 
 export default {
     name: 'tasks',
+    components: { TaskListItem, TaskDetailView },
     data() {
         return {
-            tasks: []
+            tasks: [],
+            currentSelection: undefined
         }
     },
     mounted() {
@@ -27,11 +30,13 @@ export default {
         updateTasks() {
             Vue.set(this, 'tasks', DataManager.getTasks());
         },
+        select(task) {
+            this.currentSelection = task;
+        },
         dmEvent(event, data) {
             if (event === 'fetch-complete') {
                 this.updateTasks();
             }
         }
-    },
-    components: { TaskListItem }
+    }
 }

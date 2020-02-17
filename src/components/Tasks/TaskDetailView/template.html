@@ -1,0 +1,43 @@
+<div class="task-detail-view">
+    <div class="section">
+        <div>
+            <textarea id="title-input" v-model="task && task.title" :disabled="!task" placeholder="Title"></textarea>
+            <textarea id="description-input" v-model="task && task.description" :disabled="!task" placeholder="Description"></textarea>
+        </div>
+    </div>
+    <div class="section">
+        <table id="props-table">
+            <tbody>
+                <tr>
+                    <td>Due</td>
+                    <td>
+                        <select v-model="dueDateType">
+                            <option value="d">On date...</option>
+                            <option value="a">ASAP</option>
+                            <option value="e">Eventually</option>
+                        </select>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>For</td>
+                    <td>
+                        <course-select v-model="task && task.course"></course-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Priority</td>
+                    <td>
+                        <select v-model="task && task.priority">
+                            <option value=-2>Really low</option>
+                            <option value=-1>Low</option>
+                            <option value=0>Normal</option>
+                            <option value=1>High</option>
+                            <option value=2>Really high</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

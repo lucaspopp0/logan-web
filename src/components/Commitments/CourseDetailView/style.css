@@ -2,12 +2,18 @@
     flex-direction: column;
 }
 
-.section {
-    padding: 12px;
-}
-
 #basic-info {
     border-bottom: solid 1px #e0e0e0;
+}
+
+#basic-info input[type="text"] {
+    display: block;
+    margin-bottom: 0.2em;
+    width: 100%;
+}
+
+#name-input {
+    font-size: 2em;
 }
 
 #sections-container {

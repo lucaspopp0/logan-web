@@ -1,6 +1,8 @@
 <div id="tasks" class="fullheight">
     <div id="task-list" class="panel list large-list">
-        <task-list-item v-for="(task, index) in tasks" :key="task.id" :task="task"></task-list-item>
+        <task-list-item v-for="(task, index) in tasks" :key="task.id" :task="task" @click.native="select(task)"></task-list-item>
     </div>
-    <div id="task-detail" class="panel list-detail"></div>
+    <div id="task-detail" class="panel list-detail">
+        <task-detail-view class="fullheight" :task="currentSelection"></task-detail-view>
+    </div>
 </div>
