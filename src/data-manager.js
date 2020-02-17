@@ -4,6 +4,7 @@ import api from './api'
 
 let currentUser;
 let isSignedIn = false;
+let needsFetch = true;
 
 let semesters = [];
 let assignments = [];
@@ -19,7 +20,7 @@ function sendEventToListeners(event, data) {
 
 async function signIn(googleUser) {
     // const idToken = googleUser.getAuthResponse().id_token;
-    const idToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc2MmZhNjM3YWY5NTM1OTBkYjhiYjhhNjM2YmYxMWQ0MzYwYWJjOTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMjYxMTMyNjE4OTg1LW00ZWI5aHV1cW9zZmRkaWJnMTdqZ201MGQ2OWcwa2kzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMjYxMTMyNjE4OTg1LW00ZWI5aHV1cW9zZmRkaWJnMTdqZ201MGQ2OWcwa2kzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAxNjI2MDYyNjUxNzI2NDAwMzk4IiwiaGQiOiJjYXNlLmVkdSIsImVtYWlsIjoibG1wMTIyQGNhc2UuZWR1IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiI2TzY5NUUybjA4cXYxUU9oZW5sNnVnIiwibmFtZSI6Ikx1Y2FzIFBvcHAiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FBdUU3bUMzZnNrSWtKMkNTbEZ2RjUyVXBjdHg3YjFtY0tIY181Y28zQzNyQ0E9czk2LWMiLCJnaXZlbl9uYW1lIjoiTHVjYXMiLCJmYW1pbHlfbmFtZSI6IlBvcHAiLCJsb2NhbGUiOiJlbiIsImlhdCI6MTU4MTk1MzE1MiwiZXhwIjoxNTgxOTU2NzUyLCJqdGkiOiIzMGQzZmEyNTA2OWIwOTM4OWE0ODYzZjM0MWY2YWFlYTk4ZjAzZTYxIn0.Xno0ssPRIXocUWZCn0iT8wXb6bBmqK3NNX6jtHbmGedSWzCAwg5ZNq6lpBpzc0DAi9964QJ_rIpXjW8OEUa64mK5RidNBIqdsITA0pQtN0LcKA4JibWDAMrMTvYa99CkAWKhUSGyJlk0_sc4Fwe_9lz4ICYs0hzVlEIFbWv5Go4C39_hwg2MuVDvVyrFriauatBo2xlm51qXAIshrdYT4N3fUaDujaiZxEZh-bJUPA9cvxIaXkTvBaX36Qmki9JwAI_jwChWUJ6gC9GM0aZRgykFpf0rYv5TgLx5yG-EkksTddmK4KnLBun3TMRw7B0HFOAnvSB2QpHqD8jq4YXS-Q';
+    const idToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc2MmZhNjM3YWY5NTM1OTBkYjhiYjhhNjM2YmYxMWQ0MzYwYWJjOTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMjYxMTMyNjE4OTg1LW00ZWI5aHV1cW9zZmRkaWJnMTdqZ201MGQ2OWcwa2kzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMjYxMTMyNjE4OTg1LW00ZWI5aHV1cW9zZmRkaWJnMTdqZ201MGQ2OWcwa2kzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAxNjI2MDYyNjUxNzI2NDAwMzk4IiwiaGQiOiJjYXNlLmVkdSIsImVtYWlsIjoibG1wMTIyQGNhc2UuZWR1IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJDZzFaZWp6NFg3cXppQmxnNlUtUG5BIiwibmFtZSI6Ikx1Y2FzIFBvcHAiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FBdUU3bUMzZnNrSWtKMkNTbEZ2RjUyVXBjdHg3YjFtY0tIY181Y28zQzNyQ0E9czk2LWMiLCJnaXZlbl9uYW1lIjoiTHVjYXMiLCJmYW1pbHlfbmFtZSI6IlBvcHAiLCJsb2NhbGUiOiJlbiIsImlhdCI6MTU4MTk1NjQ1MSwiZXhwIjoxNTgxOTYwMDUxLCJqdGkiOiIzNzg4NDdmN2VjNzBmOTFhZjU0MTFmNmU0ZmNkYTA2NTljYjc0MDg0In0.pjP0x1pXS5jx5WdYCfAMN-ykXFIwN5Juyq2AzaUK6dPmXxJLjU1kNGRB4JLvpYTddy7Ffkq-Z0YFur3Ib_Pd29CfXmvOg43iX1y-73ts0u9rAb7OumcFWAVTDzHEv4rtfELpovB8Tecs-NhmOtipxsUHN8lQHGhnd085IkGpfW9nNZ1FvH6kQtYH1udcMHQYYp6Umzw17JdguPMW-xlPEGyxJQJTXhgz5aHx_xTnx2MX17RkjhLFB7tZMDoulZwUfsj05UgSDyoKo6GdAmCyRkEMSPJPxheCSw0l6dqhdhvUeiqGc-UrpDZGRPER4NuhjAvHRTs2qx2oAp6m5DP5Aw';
     console.log('signing in');
     await establishAuth(idToken);
     isSignedIn = true;
@@ -107,6 +108,8 @@ async function fetchAllData() {
     assignments = tempAssignments;
     tasks = tempTasks;
 
+    needsFetch = false;
+
     sendEventToListeners('fetch-complete');
 }
 
@@ -130,5 +133,6 @@ export default {
     fetchCurrentUser,
     fetchAllData,
     getTasks: () => tasks,
-    getSemesters: () => semesters
+    getSemesters: () => semesters,
+    needsFetch: () => needsFetch
 }
