@@ -12,9 +12,9 @@
         <a class="task-title">{{ task.title }}</a>
 
         <!-- Due date -->
-        <p class="task-deadline" v-if="overdue">www.netflix.com</p>
+        <p class="task-deadline" v-if="overdue">OVERDUE</p>
 
         <!-- Description -->
-        <p class="task-description" v-if="!!task.description">www.netflix.com</p>
+        <p class="task-description" v-if="!!task.description">{{ task.description }}</p>
     </div>
 </div>
