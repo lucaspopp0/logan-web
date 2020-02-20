@@ -11,24 +11,24 @@
                 <tr>
                     <td>Due</td>
                     <td>
-                        <select v-model="dueDateType">
+                        <select v-model="dueDateType" :disabled="!task">
                             <option value="d">On date...</option>
                             <option value="a">ASAP</option>
                             <option value="e">Eventually</option>
                         </select>
+                        <input type="date" v-model="dueDateValue">
                     </td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td>For</td>
                     <td>
-                        <course-select v-model="task && task.course"></course-select>
+                        <course-select v-model="task && task.course" :disabled="!task"></course-select>
                     </td>
                 </tr>
                 <tr>
                     <td>Priority</td>
                     <td>
-                        <select v-model="task && task.priority">
+                        <select v-model="task && task.priority || 0" :disabled="!task">
                             <option value=-2>Really low</option>
                             <option value=-1>Low</option>
                             <option value=0>Normal</option>

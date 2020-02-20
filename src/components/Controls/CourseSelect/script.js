@@ -14,6 +14,12 @@ export default {
     },
     mounted() {
         DataManager.addListener(this);
+
+        if (DataManager.needsFetch()) {
+            DataManager.fetchAllData();
+        } else {
+            this.updateData();
+        }
     },
     beforeDestroy() {
         DataManager.removeListener(this);
