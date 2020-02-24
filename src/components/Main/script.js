@@ -9,8 +9,9 @@ export default {
   },
   mounted() {
     DataManager.addListener(this);
-    // TODO: Remove for prod
-    DataManager.signIn();
+    
+    if (process.env.NODE_ENV == 'development') 
+      DataManager.signIn();
   },
   beforeDestroy() {
     DataManager.removeListener(this);
