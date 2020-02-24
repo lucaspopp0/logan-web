@@ -1,5 +1,3 @@
-import Vue from 'vue'
-import axios from 'axios'
 import api from './api'
 
 const SIGNIN = 'signin';
