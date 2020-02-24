@@ -63,6 +63,15 @@ export default {
                 mEnd.set({ hour: nEnd.hour(), minute: nEnd.minute() });
                 this.section.end = mEnd.format('M/DD/YYYY, HH:mm');
             }
+        },
+        weeklyRepeat: {
+            get() {
+                if (!this.section) return undefined;
+                return this.section.weeklyRepeat;
+            },
+            set(newValue) {
+                this.section.weeklyRepeat = Number(newValue);
+            }
         }
     }
 }
