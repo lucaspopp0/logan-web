@@ -11,11 +11,11 @@
                 <button class="btn btn-sm btn-light">+</button>
             </div>
             <div class="list small-list">
-                <section-list-item v-for="section of course.sections" :key="section.secid" :section="section"></section-list-item>
+                <section-list-item v-for="section of course.sections" :key="section.secid" :section="section" @click.native="select(section)" :class="{ active: section == currentSelection }"></section-list-item>
             </div>
         </div>
         <div class="panel list-detail">
-            <section-detail-view></section-detail-view>
+            <section-detail-view :section="currentSelection"></section-detail-view>
         </div>
     </div>
 </div>

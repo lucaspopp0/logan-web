@@ -6,6 +6,13 @@ export default {
     components: { SectionListItem, SectionDetailView },
     props: ['course'],
     data() {
-        return {}
+        return {
+            currentSelection: null
+        }
+    },
+    methods: {
+        select(section) {
+            this.currentSelection = section;
+        }
     }
 }

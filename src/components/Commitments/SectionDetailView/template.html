@@ -1,13 +1,13 @@
 <div id="section-detail-view" class="fullheight">
     <div class="section">
         <div class="input-container">
-            <input type="text" placeholder="Name">
+            <input type="text" placeholder="Name" v-model="section && section.name">
         </div>
         <div class="input-container">
-            <input type="text" placeholder="Location">
+            <input type="text" placeholder="Location" v-model="section && section.location">
         </div>
-        <p>Term begins <input type="date"> and ends <input type="date"></p>
-        <p>Occurs from <input type="time"> until <input type="time"></p>
-        <p>Repeats every <select><option v-for="n in 3">{{ n }}</option></select> weeks</p>
+        <p>Term begins <input type="date" v-model="startDate"> and ends <input type="date" v-model="endDate"></p>
+        <p>Occurs from <input type="time" v-model="startTime"> until <input type="time" v-model="endTime"></p>
+        <p>Repeats every <select v-model="section && section.weeklyRepeat"><option v-for="n in 3">{{ n }}</option></select> weeks</p>
     </div>
 </div>
