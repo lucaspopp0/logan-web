@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import moment from 'moment';
+import DOWPicker from '@/components/Controls/DOWPicker';
 
 export default {
     name: 'section-detail-view',
+    components: { DowPicker: DOWPicker },
     props: ['section'],
     data() {
         return {}
