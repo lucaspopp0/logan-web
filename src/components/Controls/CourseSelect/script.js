@@ -15,9 +15,7 @@ export default {
     mounted() {
         DataManager.addListener(this);
 
-        if (DataManager.needsFetch()) {
-            DataManager.fetchAllData();
-        } else {
+        if (!DataManager.needsFetch()) {
             this.updateData();
         }
     },
@@ -26,7 +24,7 @@ export default {
     },
     methods: {
         dmEvent(event, data) {
-            if (event == DataManager.FETCH_COMPLETE) {
+            if (event == DataManager.EventType.FETCH_COMPLETE) {
                 this.updateData();
             }
         },

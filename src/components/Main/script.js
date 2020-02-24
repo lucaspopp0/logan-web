@@ -10,8 +10,7 @@ export default {
   mounted() {
     DataManager.addListener(this);
     
-    if (process.env.NODE_ENV == 'development') 
-      DataManager.signIn();
+    if (process.env.NODE_ENV == 'development') DataManager.signIn();
   },
   beforeDestroy() {
     DataManager.removeListener(this);
@@ -21,7 +20,8 @@ export default {
       DataManager.signIn(googleUser);
     },
     dmEvent: function(event, data) {
-      if (event == 'signin') this.isSignedIn = DataManager.isSignedIn();
+      if (event == DataManager.EventType.SIGNIN) 
+        this.isSignedIn = DataManager.isSignedIn();
     },
     sync() {
       DataManager.fetchAllData();

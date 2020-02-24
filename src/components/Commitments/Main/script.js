@@ -17,12 +17,8 @@ export default {
     },
     mounted() {
         DataManager.addListener(this);
-        if (DataManager.needsFetch()) {
-            DataManager.fetchAllData()
-            .then(() => {
-                this.updateData()
-            })
-        } else {
+        
+        if (!DataManager.needsFetch()) {
             this.updateData()
         }
     },
@@ -50,7 +46,7 @@ export default {
             Vue.set(this.currentSelection, 'value', course);
         },
         dmEvent(event, data) {
-            if (event === 'fetch-complete') {
+            if (event === DataManager.EventType.FETCH_COMPLETE) {
                 this.updateData();
             }
         }

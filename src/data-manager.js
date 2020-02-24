@@ -1,10 +1,20 @@
 import api from './api'
 
-const SIGNIN = 'signin';
-const FETCH_COMPLETE = 'fetch-complete';
+const EventType = {
+    SIGNIN: 'signin',
+    FETCH_COMPLETE: 'fetch-complete'
+};
+
+const AuthStatus = {
+    UNAUTHED: 'unauthed',
+    ESTABLISHING: 'establishing',
+    FAILED: 'failed',
+    SUCCESS: 'success'
+};
+
+let currentAuthStatus = AuthStatus.UNAUTHED;
 
 let currentUser;
-let isSignedIn = false;
 let needsFetch = true;
 
 let semesters = [];
@@ -24,6 +34,8 @@ function sendEventToListeners(event, data) {
 async function signIn(googleUser) {
     let idToken;
 
+    currentAuthStatus = AuthStatus.UNAUTHED;
+
     if (process.env.NODE_ENV == 'production') {
         idToken = googleUser.getAuthResponse().id_token;
         console.log(idToken);
@@ -31,10 +43,20 @@ async function signIn(googleUser) {
         idToken = DEV_BEARER;
     }
 
-    await establishAuth(idToken);
-    isSignedIn = true;
-    sendEventToListeners(SIGNIN);
-    await fetchAllData();
+    currentAuthStatus = AuthStatus.ESTABLISHING;
+
+    try {
+        await establishAuth(idToken);
+        currentAuthStatus = AuthStatus.SUCCESS;
+    } catch (authError) {
+        currentAuthStatus = AuthStatus.FAILED;
+        console.error(authError);
+    }
+
+    if (currentAuthStatus == AuthStatus.SUCCESS) {
+        sendEventToListeners(EventType.SIGNIN);
+        await fetchAllData();
+    }
 }
 
 async function establishAuth(idToken) {
@@ -46,6 +68,11 @@ async function fetchCurrentUser() {
 }
 
 async function fetchAllData() {
+    if (currentAuthStatus != AuthStatus.SUCCESS) {
+        console.error('Cannot fetch before establishing auth');
+        return;
+    }
+    
     // Fetch user
     await fetchCurrentUser();
 
@@ -118,7 +145,7 @@ async function fetchAllData() {
 
     needsFetch = false;
 
-    sendEventToListeners(FETCH_COMPLETE);
+    sendEventToListeners(EventType.FETCH_COMPLETE);
 }
 
 export default {
@@ -133,9 +160,7 @@ export default {
             }
         }
     },
-    isSignedIn: function () {
-        return isSignedIn
-    },
+    isSignedIn: () => currentAuthStatus == AuthStatus.SUCCESS,
     signIn,
     establishAuth,
     fetchCurrentUser,
@@ -144,5 +169,5 @@ export default {
     getAssignments: () => assignments,
     getSemesters: () => semesters,
     needsFetch: () => needsFetch,
-    SIGNIN, FETCH_COMPLETE
+    EventType, AuthStatus
 }

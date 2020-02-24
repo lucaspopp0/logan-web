@@ -14,12 +14,8 @@ export default {
     },
     mounted() {
         DataManager.addListener(this);
-        if (DataManager.needsFetch()) {
-            DataManager.fetchAllData()
-            .then(() => {
-                this.updateTasks()
-            })
-        } else {
+
+        if (!DataManager.needsFetch()) {
             this.updateTasks();
         }
     },
@@ -34,7 +30,7 @@ export default {
             this.currentSelection = task;
         },
         dmEvent(event, data) {
-            if (event === 'fetch-complete') {
+            if (event === DataManager.EventType.FETCH_COMPLETE) {
                 this.updateTasks();
             }
         }
