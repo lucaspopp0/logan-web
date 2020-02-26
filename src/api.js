@@ -1,5 +1,6 @@
-import Vue from 'vue'
-import axios from 'axios'
+import _ from 'lodash';
+import Vue from 'vue';
+import axios from 'axios';
 
 let BEARER;
 
@@ -30,32 +31,29 @@ async function getCurrentUser() {
     return await execute('get', '/users/me');
 }
 
-async function getSemesters() {
-    return await execute('get', '/semesters');
-}
+const types = ['Semester', 'Course', 'Section', 'Assignment', 'Task'];
+const methods = {};
 
-async function getCourses() {
-    return await execute('get', '/courses');
-}
+_.forEach(types, type => {
+    methods[`get${type}s`] = async function() {
+        return await execute('get', `/${type.toLowerCase()}s`);
+    }
 
-async function getSections() {
-    return await execute('get', '/sections');
-}
+    methods[`add${type}`] = async function(obj) { 
+        return await execute('post', `/${type.toLowerCase()}`, obj);
+    }
 
-async function getAssignments() {
-    return await execute('get', '/assignments');
-}
+    methods[`update${type}`] = async function(obj) {
+        return await execute('put', `/${type.toLowerCase()}`, obj);
+    }
 
-async function getTasks() {
-    return await execute('get', '/tasks');
-}
+    methods[`delete${type}`] = async function(obj) {
+        return await execute('delete', `/${type.toLowerCase()}`, obj);
+    }
+});
 
 export default {
     establishAuth,
     getCurrentUser,
-    getSemesters,
-    getCourses,
-    getSections,
-    getAssignments,
-    getTasks
+    ...methods
 }
