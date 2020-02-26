@@ -40,15 +40,15 @@ _.forEach(types, type => {
     }
 
     methods[`add${type}`] = async function(obj) { 
-        return await execute('post', `/${type.toLowerCase()}`, obj);
+        return await execute('post', `/${type.toLowerCase()}s`, obj);
     }
 
     methods[`update${type}`] = async function(obj) {
-        return await execute('put', `/${type.toLowerCase()}`, obj);
+        return await execute('put', `/${type.toLowerCase()}s`, obj);
     }
 
     methods[`delete${type}`] = async function(obj) {
-        return await execute('delete', `/${type.toLowerCase()}`, obj);
+        return await execute('delete', `/${type.toLowerCase()}s`, obj);
     }
 });
 
