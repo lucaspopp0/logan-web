@@ -1,0 +1,12 @@
+#leftsidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+#task-list {
+    flex-grow: 1;
+}
+
+#task-action-bar {
+    padding: 4px 12px;
+}

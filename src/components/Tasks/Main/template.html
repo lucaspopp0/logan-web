@@ -1,6 +1,14 @@
 <div id="tasks" class="fullheight">
-    <div id="task-list" class="panel list large-list">
-        <task-list-item v-for="(task, index) in tasks" :key="task.id" :task="task" @click.native="select(task)"></task-list-item>
+    <div id="leftsidebar" class="panel">
+        <div id="task-list" class="list large-list">
+            <div class="list-header">
+                <span class="list-header-title">Today</span>
+            </div>
+            <task-list-item v-for="(task, index) in tasks" :key="task.id" :task="task" @click.native="select(task)"></task-list-item>
+        </div>
+        <div id="task-action-bar" class="logan-bg">
+            <button class="btn btn-light btn-sm" @click="newTask">New Task</button>
+        </div>
     </div>
     <div id="task-detail" class="panel list-detail">
         <task-detail-view class="fullheight" :task="currentSelection"></task-detail-view>

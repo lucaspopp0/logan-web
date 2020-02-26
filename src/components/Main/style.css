@@ -7,6 +7,7 @@ body {
 
 .logan-bg {
     background: rgb(0, 150, 136);
+    color: white;
 }
 
 .input-container {
@@ -100,6 +101,7 @@ input:focus, textarea:focus {
 }
 
 .list {
+    position: relative;
     overflow-y: scroll;
 }
 
@@ -131,4 +133,14 @@ input:focus, textarea:focus {
 
 .list > .list-item.active {
     background: #90caf9;
+}
+
+.list > .list-header {
+    padding: 4px 12px;
+    background: #e0e0e0;
+    border-bottom: solid 1px #d0d0d0;
+}
+
+.list > .list-header > .list-header-title {
+    font-weight: bold;
 }
