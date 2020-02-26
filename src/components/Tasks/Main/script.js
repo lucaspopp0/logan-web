@@ -4,6 +4,7 @@ import DataManager from '@/data-manager';
 import TaskListItem from '../TaskListItem';
 import TaskDetailView from '../TaskDetailView'
 import moment from 'moment';
+import _ from 'lodash';
 
 export default {
     name: 'tasks',
@@ -51,6 +52,18 @@ export default {
                 this.select(response);
                 DataManager.fetchAllData();
             })
+        },
+        deleteCurrentTask() {
+            console.log('delete');
+            if (!this.currentSelection) return;
+            
+            api.deleteTask(_.pick(this.currentSelection, ['uid', 'tid']))
+            .then(response => {
+                DataManager.fetchAllData();
+            })
+            
+            this.tasks.splice(this.tasks.indexOf(this.currentSelection), 1);
+            this.select(undefined);
         },
     }
 }

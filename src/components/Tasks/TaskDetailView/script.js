@@ -18,5 +18,10 @@ export default {
             if (this.dueDateType != 'd') return undefined;
             return moment(this.task.dueDate, 'M/D/YY').format('YYYY-MM-DD');
         }
+    },
+    methods: {
+        deleteTask() {
+            this.$emit('delete');
+        }
     }
 }
