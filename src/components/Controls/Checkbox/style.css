@@ -1,3 +1,12 @@
+.checkbox-container {
+    position: relative;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    vertical-align: middle;
+}
+
 .checkbox {
     display: inline-block;
     appearance: none;
@@ -6,4 +15,12 @@
     border-radius: 50%;
     border: solid 1px black;
     outline: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.priority-label {
+    position: relative;
+    font-size: 0.9em;
 }

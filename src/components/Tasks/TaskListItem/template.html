@@ -1,5 +1,5 @@
 <div class="list-item task-list-item">
-    <checkbox :checked="task && task.completed" :color="task.course.color"></checkbox>
+    <checkbox :checked="task && task.completed" :color="task.course && task.course.color" :priority="task && task.priority"></checkbox>
     <div class="task-content">
         <div class="task-commitment-container" v-if="!!task.course || !!task.relatedAssignment">
             <!-- Course label -->

@@ -1,1 +1,4 @@
-<input type="checkbox" class="checkbox" v-model="checked" :style="styleObject">
+<div class="checkbox-container">
+    <input type="checkbox" class="checkbox" v-model="checked" :style="styleObject">
+    <span class="priority-label" :style="priorityLabelStyle">{{ priorityText }}</span>
+</div>
