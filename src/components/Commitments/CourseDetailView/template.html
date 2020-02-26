@@ -8,7 +8,7 @@
         <div id="sections-list" class="small-list">
             <div id="section-head" class="logan-bg">
                 Sections
-                <button class="btn btn-sm btn-light">+</button>
+                <button class="btn btn-sm btn-light" @click="newSection">+</button>
             </div>
             <div class="list small-list">
                 <section-list-item v-for="section of course.sections" :key="section.secid" :section="section" @click.native="select(section)" :class="{ active: section == currentSelection }"></section-list-item>
