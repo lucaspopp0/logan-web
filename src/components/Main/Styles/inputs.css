@@ -1,0 +1,51 @@
+.input-container {
+    margin-bottom: 5px;
+}
+
+.input-container > input, .input-container > textarea {
+    width: 100%;
+}
+
+input, textarea {
+    appearance: none;
+    border: none;
+    background: rgba(0, 0, 0, 0.015);
+    border-radius: 3px;
+    outline: none;
+    resize: none;
+}
+
+input {
+    padding: 2px 7px;
+}
+
+input[type="time"] {
+    padding: 2px 3px;
+}
+
+textarea {
+    padding: 5px 7px;
+}
+
+input[type="date"] {
+    width: calc(8em + 3px);
+}
+
+input[type="time"] {
+    width: calc(5em + 3px);
+}
+
+input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-clear-button,
+input[type="time"]::-webkit-inner-spin-button, input[type="time"]::-webkit-clear-button {
+    display: none;
+}
+
+input:hover, textarea:hover,
+input:active, textarea:active {
+    background: rgba(0, 0, 0, 0.05);
+    resize: vertical;
+}
+
+input:focus, textarea:focus {
+    background: rgba(0, 0, 0, 0.075);
+}

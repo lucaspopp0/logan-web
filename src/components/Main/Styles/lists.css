@@ -1,0 +1,72 @@
+.list {
+    position: relative;
+    overflow-y: scroll;
+}
+
+.small-list {
+    width: 24vw;
+    min-width: 300px;
+    max-width: 380px;
+}
+
+.large-list {
+    width: 60vw;
+}
+
+.list-detail {
+    flex-grow: 1;
+    overflow-y: scroll;
+}
+
+.list .list-item {
+    border-style: solid;
+    border-width: 1px 0px;
+    border-color: #e0e0e0;
+    padding: 12px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    user-select: none;
+    background: white;
+    color: black;
+    margin: -1px 0px 0px 0px;
+    z-index: 0;
+}
+
+.list.selectable .list-item:hover {
+    z-index: 10;
+    border-color: #dedede;
+    background: #f7f7f7;
+}
+
+.list.selectable .list-item.active {
+    background: #dcf0ff;
+    border-color: #c5d8e6;
+    z-index: 12;
+}
+
+.list .list-header {
+    padding: 4px 12px;
+    background: #e6e6e6;
+    border-style: solid;
+    border-width: 1px 0px;
+    border-color: #cfcfcf;
+    margin: -1px 0px 0px 0px;
+    z-index: 15;
+}
+
+.list .list-header > .list-header-title {
+    font-weight: bold;
+}
+
+.list.selectable .list-header.selectable:hover {
+    z-index: 20;
+    background: #dedede;
+    border-color: #c7c7c7;
+}
+
+.list.selectable .list-header.selectable.active {
+    z-index: 20;
+    background: #c8d2e6;
+    border-color: #95a9d0;
+}

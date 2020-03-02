@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import "./Styles/inputs.css";
+@import "./Styles/lists.css";
 
 body {
     margin: 0;
@@ -8,58 +10,6 @@ body {
 .logan-bg {
     background: rgb(0, 150, 136);
     color: white;
-}
-
-.input-container {
-    margin-bottom: 5px;
-}
-
-.input-container > input, .input-container > textarea {
-    width: 100%;
-}
-
-input, textarea {
-    appearance: none;
-    border: none;
-    background: rgba(0, 0, 0, 0.015);
-    border-radius: 3px;
-    outline: none;
-    resize: none;
-}
-
-input {
-    padding: 2px 7px;
-}
-
-input[type="time"] {
-    padding: 2px 3px;
-}
-
-textarea {
-    padding: 5px 7px;
-}
-
-input[type="date"] {
-    width: calc(8em + 3px);
-}
-
-input[type="time"] {
-    width: calc(5em + 3px);
-}
-
-input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-clear-button,
-input[type="time"]::-webkit-inner-spin-button, input[type="time"]::-webkit-clear-button {
-    display: none;
-}
-
-input:hover, textarea:hover,
-input:active, textarea:active {
-    background: rgba(0, 0, 0, 0.05);
-    resize: vertical;
-}
-
-input:focus, textarea:focus {
-    background: rgba(0, 0, 0, 0.075);
 }
 
 #main {
@@ -98,77 +48,4 @@ input:focus, textarea:focus {
 
 .panel:not(:last-child) {
     border-right: solid 1px #e0e0e0;
-}
-
-.list {
-    position: relative;
-    overflow-y: scroll;
-}
-
-.small-list {
-    width: 24vw;
-    min-width: 300px;
-    max-width: 380px;
-}
-
-.large-list {
-    width: 60vw;
-}
-
-.list-detail {
-    flex-grow: 1;
-    overflow-y: scroll;
-}
-
-.list .list-item {
-    border-style: solid;
-    border-width: 1px 0px;
-    border-color: #e0e0e0;
-    padding: 12px;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    user-select: none;
-    background: white;
-    color: black;
-    margin: -1px 0px 0px 0px;
-    z-index: 0;
-}
-
-.list.selectable .list-item:hover {
-    z-index: 10;
-    border-color: #dedede;
-    background: #f7f7f7;
-}
-
-.list.selectable .list-item.active {
-    background: #dcf0ff;
-    border-color: #c5d8e6;
-    z-index: 12;
-}
-
-.list .list-header {
-    padding: 4px 12px;
-    background: #e6e6e6;
-    border-style: solid;
-    border-width: 1px 0px;
-    border-color: #cfcfcf;
-    margin: -1px 0px 0px 0px;
-    z-index: 15;
-}
-
-.list .list-header > .list-header-title {
-    font-weight: bold;
-}
-
-.list.selectable .list-header.selectable:hover {
-    z-index: 20;
-    background: #dedede;
-    border-color: #c7c7c7;
-}
-
-.list.selectable .list-header.selectable.active {
-    z-index: 20;
-    background: #c8d2e6;
-    border-color: #95a9d0;
 }
