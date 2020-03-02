@@ -16,25 +16,3 @@ textarea {
 #props-table td {
     padding: 2px 7px;
 }
-
-#delete-container {
-    padding: 6px;
-}
-
-.delete-button {
-    appearance: none;
-    border-radius: 3px;
-    width: 100%;
-    border: none;
-    background: #ffdddd;
-    padding: 4px;
-    outline: none !important;
-}
-
-.delete-button:hover {
-    background: #ffc0c0;
-}
-
-.delete-button:active {
-    background: #ffafaf;
-}

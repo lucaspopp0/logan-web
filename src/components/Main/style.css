@@ -49,3 +49,28 @@ body {
 .panel:not(:last-child) {
     border-right: solid 1px #e0e0e0;
 }
+
+.delete-container {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 6px 3px;
+}
+
+.delete-container > .delete-button {
+    flex-grow: 1;
+    appearance: none;
+    border-radius: 3px;
+    border: none;
+    background: #ffdddd;
+    padding: 4px;
+    outline: none !important;
+    margin: 0px 3px;
+}
+
+.delete-container > .delete-button:hover {
+    background: #ffc0c0;
+}
+
+.delete-container > .delete-button:active {
+    background: #ffafaf;
+}
