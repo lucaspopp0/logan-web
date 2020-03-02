@@ -22,8 +22,8 @@ export default {
                 cid: this.course.cid,
                 name: 'Untitled',
                 weeklyRepeat: 1,
-                start: moment(this.course.semester.startDate).format('MM/DD/YYY HH:mm'),
-                end: moment(this.course.semester.endDate).format('MM/DD/YYY HH:mm'),
+                start: moment(this.course.semester.startDate).format('MM/DD/YYYY HH:mm'),
+                end: moment(this.course.semester.endDate).format('MM/DD/YYYY HH:mm'),
             }
 
             api.addSection(newsec)
