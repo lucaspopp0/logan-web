@@ -1,3 +1,5 @@
+const DEFAULT_COLOR = '#b3b3b3';
+
 export default {
     name: 'checkbox',
     props: {
@@ -18,15 +20,17 @@ export default {
         return {}
     },
     computed: {
+        currentColor() {
+            return !!this.color ? '#' + this.color : DEFAULT_COLOR;
+        },
         styleObject() {
-            let color = !!this.color ? '#' + this.color : 'rgba(0, 0, 0, 0.3)';
             let style = {
-                border: 'solid 1px ' + color,
+                border: 'solid 1px ' + this.currentColor,
                 background: 'none'
             };
 
             if (this.checked)
-                style.background = `radial-gradient(circle at center, ${color} 0%, ${color} 54.5%, rgba(0, 0, 0, 0) 55.5%, rgba(0, 0, 0, 0) 100%)`;
+                style.background = `radial-gradient(circle at center, ${this.currentColor} 0%, ${this.currentColor} 54.5%, rgba(0, 0, 0, 0) 55.5%, rgba(0, 0, 0, 0) 100%)`;
             
             return style;
         },
@@ -46,11 +50,16 @@ export default {
         },
         priorityLabelStyle() {
             const style = {
-                color: '#' + this.color
+                color: this.currentColor,
+                display: 'inline-block'
             };
 
             if (this.priority > 0) {
                 style.top = '1px';
+            }
+
+            if (this.checked) {
+                style.display = 'none';
             }
 
             return style;

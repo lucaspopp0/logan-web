@@ -120,8 +120,10 @@ input:focus, textarea:focus {
     overflow-y: scroll;
 }
 
-.list > .list-item {
-    border-bottom: solid 1px #e0e0e0;
+.list .list-item {
+    border-style: solid;
+    border-width: 1px 0px;
+    border-color: #e0e0e0;
     padding: 12px;
     display: flex;
     justify-content: left;
@@ -129,18 +131,44 @@ input:focus, textarea:focus {
     user-select: none;
     background: white;
     color: black;
+    margin: -1px 0px 0px 0px;
+    z-index: 0;
 }
 
-.list > .list-item.active {
-    background: #90caf9;
+.list.selectable .list-item:hover {
+    z-index: 10;
+    border-color: #dedede;
+    background: #f7f7f7;
 }
 
-.list > .list-header {
+.list.selectable .list-item.active {
+    background: #dcf0ff;
+    border-color: #c5d8e6;
+    z-index: 12;
+}
+
+.list .list-header {
     padding: 4px 12px;
-    background: #e0e0e0;
-    border-bottom: solid 1px #d0d0d0;
+    background: #e6e6e6;
+    border-style: solid;
+    border-width: 1px 0px;
+    border-color: #cfcfcf;
+    margin: -1px 0px 0px 0px;
+    z-index: 15;
 }
 
-.list > .list-header > .list-header-title {
+.list .list-header > .list-header-title {
     font-weight: bold;
+}
+
+.list.selectable .list-header.selectable:hover {
+    z-index: 20;
+    background: #dedede;
+    border-color: #c7c7c7;
+}
+
+.list.selectable .list-header.selectable.active {
+    z-index: 20;
+    background: #c8d2e6;
+    border-color: #95a9d0;
 }
