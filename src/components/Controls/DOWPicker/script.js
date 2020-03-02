@@ -1,4 +1,5 @@
 const labels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+const ALL_FALSE = [false, false, false, false, false, false, false];
 
 export default {
     name: 'dow-picker',
@@ -9,7 +10,9 @@ export default {
         }
     },
     data() {
-        return {}
+        return {
+            checks: ALL_FALSE
+        }
     },
     computed: {
         options() {
@@ -18,14 +21,18 @@ export default {
                 out.push({ label: labels[i], value: i });
             }
             return out;
-        },
-        checks() {
+        }
+    },
+    watch: {
+        value() {
+            if (!this.value || this.value.trim.length === 0) this.checks = ALL_FALSE;
+
             let split = this.value.split('');
             let out = [];
             for (let i = 0;i < 7;i++) {
                 out.push(split.indexOf('' + i) != -1);
             }
-            return out;
+            this.checks = out;
         }
     },
     methods: {
@@ -34,7 +41,8 @@ export default {
             for (let i = 0;i < this.checks.length;i++) {
                 if (this.checks[i]) out += i;
             }
-            this.$emit('input', out);
+
+            this.$emit('input', out.length > 0 ? out : undefined);
         }
     }
 }

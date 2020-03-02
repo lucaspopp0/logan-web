@@ -8,6 +8,6 @@
         </div>
         <p>Term begins <input type="date" v-model="startDate"> and ends <input type="date" v-model="endDate"></p>
         <p>Occurs from <input type="time" v-model="startTime"> until <input type="time" v-model="endTime"></p>
-        <p>Repeats every <select v-model="weeklyRepeat"><option v-for="n in 3">{{ n }}</option></select> weeks on <dow-picker v-model="section && section.daysOfWeek || ''"></dow-picker></p>
+        <p>Repeats every <select v-model="weeklyRepeat"><option v-for="n in 3">{{ n }}</option></select> weeks on <dow-picker v-model="section && section.daysOfWeek"></dow-picker></p>
     </div>
 </div>
