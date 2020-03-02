@@ -56,7 +56,7 @@ body {
     padding: 6px 3px;
 }
 
-.delete-container > .delete-button {
+.delete-button {
     flex-grow: 1;
     appearance: none;
     border-radius: 3px;
@@ -64,13 +64,23 @@ body {
     background: #ffdddd;
     padding: 4px;
     outline: none !important;
+    color: #c80000cc;
+    font-weight: bold;
+}
+
+.delete-container > .delete-button {
     margin: 0px 3px;
 }
 
-.delete-container > .delete-button:hover {
+.delete-button:hover {
     background: #ffc0c0;
 }
 
-.delete-container > .delete-button:active {
+.delete-button:active {
     background: #ffafaf;
+}
+
+.delete-button:disabled {
+    background: #e7dddd;
+    color: #00000033;
 }

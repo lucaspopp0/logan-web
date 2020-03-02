@@ -10,4 +10,7 @@
         <p>Occurs from <input type="time" v-model="startTime"> until <input type="time" v-model="endTime"></p>
         <p>Repeats every <select v-model="weeklyRepeat"><option v-for="n in 3">{{ n }}</option></select> weeks on <dow-picker v-model="section && section.daysOfWeek"></dow-picker></p>
     </div>
+    <div class="delete-container">
+        <button class="delete-button" :disabled="!section">Delete Section</button>
+    </div>
 </div>

@@ -13,7 +13,6 @@ export default {
         startDate: {
             get() {
                 if (!this.section) return undefined;
-                console.log(this.section.start);
                 return moment(this.section.start).format('YYYY-MM-DD');
             },
             set(newValue) {

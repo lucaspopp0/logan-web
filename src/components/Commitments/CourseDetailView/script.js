@@ -32,5 +32,14 @@ export default {
                 DataManager.fetchAllData();
             })
         }
+    },
+    watch: {
+        course() {
+            if (this.course.sections.length > 0) {
+                this.select(this.course.sections[0]);
+            } else {
+                this.select();
+            }
+        }
     }
 }

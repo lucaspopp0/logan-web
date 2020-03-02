@@ -1,3 +1,8 @@
 #section-detail-view {
-    display: block;
+    display: flex;
+    flex-direction: column;
+}
+
+#section-detail-view > .section {
+    flex-grow: 1;
 }
