@@ -33,9 +33,7 @@ export default {
             const tempData = new TableData();
 
             let tempTasks = [...DataManager.getTasks()];
-            console.log(tempTasks.map(task => task.title));
             tempTasks.sort(sortingUtils.initialTaskSortAlgorithm(false));
-            console.log(tempTasks.map(task => task.title));
 
             const now = moment();
 

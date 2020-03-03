@@ -50,6 +50,10 @@ body {
     border-right: solid 1px #e0e0e0;
 }
 
+.action-bar {
+    padding: 4px 12px;
+}
+
 .delete-container {
     display: flex;
     justify-content: space-evenly;

@@ -1,0 +1,18 @@
+<div id="assignments" class="fullheight">
+    <div id="leftsidebar" class="panel">
+        <div id="assignments-list" class="list large-list selectable">
+            <div class="list-group" v-for="(group, index) of data.groups" :key="index">
+                <div class="list-header">
+                    <span class="list-header-title">{{ group.title }}</span>
+                </div>
+                <assignment-list-item v-for="assignment in group.content" :key="assignment.aid" :assignment="assignment" @click.native="select('assignment', assignment)" :class="{ active: currentSelection.value === assignment }"></assignment-list-item>
+            </div>
+        </div>
+        <div class="action-bar logan-bg">
+            <button class="btn btn-light btn-sm" @click="newAssignment">New Assignment</button>
+        </div>
+    </div>
+    <div id="assignment-detail" class="panel list-detail">
+        <assignment-detail-view class="fullheight" :assignment="currentSelection" @delete="deleteCurrentAssignment"></assignment-detail-view>
+    </div>
+</div>

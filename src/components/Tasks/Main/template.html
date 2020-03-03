@@ -8,7 +8,7 @@
                 <task-list-item v-for="task in group.content" :key="task.id" :task="task" @click.native="select(task)" :class="{ active: currentSelection == task }"></task-list-item>
             </div>
         </div>
-        <div id="task-action-bar" class="logan-bg">
+        <div class="action-bar logan-bg">
             <button class="btn btn-light btn-sm" @click="newTask">New Task</button>
         </div>
     </div>
