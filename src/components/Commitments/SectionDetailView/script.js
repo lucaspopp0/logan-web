@@ -122,6 +122,7 @@ export default {
         deleteSection() {
             this.timer.cancel();
             this.$emit('delete');
+            api.deleteSection(this.section);
         }
     }
 }
