@@ -36,6 +36,14 @@ class TableData {
         this.groups = [];
     }
 
+    flat() {
+        let arr = [];
+        for (const group of this.groups) {
+            arr.push(...group.content);
+        }
+        return arr;
+    }
+
 }
 
 export default TableData;
