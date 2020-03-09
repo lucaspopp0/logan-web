@@ -9,9 +9,22 @@ function compareDates(d1, d2) {
     else return 1;
 }
 
+function dateOnly(d) {
+    const t = moment(d);
+
+    t.set({
+        millisecond: 0,
+        second: 0,
+        minute: 0,
+        hour: 0
+    });
+
+    return t;
+}
+
 function readableDate(date, forSentence = false) {
-    const now = moment();
-    date = moment(date);
+    const now = dateOnly(moment());
+    date = dateOnly(date);
     const days = date.diff(now, 'days');
 
     if (days === 0) {
@@ -33,5 +46,6 @@ function readableDate(date, forSentence = false) {
 
 export default {
     compareDates,
+    dateOnly,
     readableDate
 }
