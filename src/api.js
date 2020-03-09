@@ -37,11 +37,11 @@ async function getSemesters() {
 }
 
 async function addSemester(semester) {
-    return await execute('post', '/semesters', semester);
+    return await execute('post', '/semesters', _.omit(semester, ['courses']));
 }
 
 async function updateSemester(semester) {
-    return await execute('put', '/semesters', semester);
+    return await execute('put', '/semesters', _.omit(semester, ['courses']));
 }
 
 async function deleteSemester(semester) {
@@ -55,11 +55,11 @@ async function getCourses() {
 }
 
 async function addCourse(course) {
-    return await execute('post', '/courses', course);
+    return await execute('post', '/courses', _.omit(course, ['semester', 'sections']));
 }
 
 async function updateCourse(course) {
-    return await execute('put', '/courses', course);
+    return await execute('put', '/courses', _.omit(course, ['semester', 'sections']));
 }
 
 async function deleteCourse(course) {
@@ -73,11 +73,11 @@ async function getSections() {
 }
 
 async function addSection(section) {
-    return await execute('post', '/sections', section);
+    return await execute('post', '/sections', _.omit(section, ['course']));
 }
 
 async function updateSection(section) {
-    return await execute('put', '/sections', section);
+    return await execute('put', '/sections', _.omit(section, ['course']));
 }
 
 async function deleteSection(section) {
@@ -91,11 +91,11 @@ async function getAssignments() {
 }
 
 async function addAssignment(assignment) {
-    return await execute('post', '/assignments', assignment);
+    return await execute('post', '/assignments', _.omit(assignment, ['course']));
 }
 
 async function updateAssignment(assignment) {
-    return await execute('put', '/assignments', assignment);
+    return await execute('put', '/assignments', _.omit(assignment, ['course']));
 }
 
 async function deleteAssignment(assignment) {
@@ -109,15 +109,15 @@ async function getTasks() {
 }
 
 async function addTask(task) {
-    return await execute('post', '/tasks', task);
+    return await execute('post', '/tasks', _.omit(task, ['course', 'relatedAssignment']));
 }
 
 async function updateTask(task) {
-    return await execute('put', '/tasks', task);
+    return await execute('put', '/tasks', _.omit(task, ['course', 'relatedAssignment']));
 }
 
 async function deleteTask(task) {
-    return await execute('delete', '/tasks', _.pick(course, ['uid', 'tid']));
+    return await execute('delete', '/tasks', _.pick(task, ['uid', 'tid']));
 }
 
 export default {
