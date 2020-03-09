@@ -85,9 +85,13 @@ export default {
                 DataManager.fetchAllData();
             })
         },
+        deleteSection(section) {
+            this.course.sections.splice(this.course.sections.indexOf(section), 1);
+        },
         deleteCourse() {
             this.timer.cancel();
             this.$emit('delete');
+            api.deleteCourse(this.course);
         }
     }
 }
