@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { dateOnly } from './dates';
 
 function compareStrings(s1, s2) {
     if (s1 < s2) {
@@ -15,7 +16,7 @@ function initialTaskSortAlgorithm(showingCompletedTasks) {
 }
 
 function initialSortIncompleteTasks(task1, task2) {
-    const now = moment();
+    const now = dateOnly(moment());
 
     if (task1.dueDate === 'eventually') {
         if (task2.dueDate === 'eventually') return 0;
@@ -24,11 +25,11 @@ function initialSortIncompleteTasks(task1, task2) {
         if (task2.dueDate === 'asap') return 0;
         else if (task2.dueDate === 'eventually') return -1;
         else {
-            if (moment(task2.dueDate).isBefore(now.clone().subtract(1, 'day'), 'date')) return 1;
+            if (dateOnly(task2.dueDate).isBefore(now.clone().subtract(1, 'day'), 'date')) return 1;
             else return -1;
         }
     } else {
-        const t1d = moment(task1.dueDate);
+        const t1d = dateOnly(task1.dueDate);
 
         if (task2.dueDate === 'asap') {
             if (t1d.isBefore(now.clone().subtract(1, 'day'), 'date')) return -1;
@@ -36,7 +37,7 @@ function initialSortIncompleteTasks(task1, task2) {
         } else if (task2.dueDate === 'eventually') {
             return -1;
         } else {
-            const t2d = moment(task2.dueDate);
+            const t2d = dateOnly(task2.dueDate);
             
             if (t1d.isBefore(t2d, 'date')) return -1;
             else if (t1d.isSame(t2d, 'date')) return 0;
@@ -64,9 +65,9 @@ function sectionSortTasks(task1, task2) {
     }
 
     if (!!task1.course && !task2.course) {
-        return 1;
-    } else if (!task1.course && !!task2.course) {
         return -1;
+    } else if (!task1.course && !!task2.course) {
+        return 1;
     } else if (!!task1.cid && !!task2.cid && task1.cid === task2.cid) {
         return compareStrings(task1.course.name, task2.course.name);
     }
