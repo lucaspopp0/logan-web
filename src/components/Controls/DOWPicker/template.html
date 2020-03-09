@@ -1,5 +1,5 @@
 <div class="dow-picker">
     <label v-for="option of options" :key="option.value" :class="{ active: checks[option.value] }">
-        <input type="checkbox" v-model="checks[option.value]" @change="updateValue">{{ option.label }}
+        <input type="checkbox" v-model="checks[option.value]" @change="updateValue" :disabled="disabled">{{ option.label }}
     </label>
 </div>
