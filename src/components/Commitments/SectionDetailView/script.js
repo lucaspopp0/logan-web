@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import moment from 'moment';
 import DOWPicker from '@/components/Controls/DOWPicker';
+import { UpdateTimer } from '@/utils/timers';
+import api from '@/api';
 
 export default {
     name: 'section-detail-view',
@@ -22,7 +24,22 @@ export default {
         }
     },
     data() {
-        return {}
+        return {
+            changesPresent: false,
+            timer: undefined
+        }
+    },
+    mounted() {
+        this.timer = new UpdateTimer(2000, () => { this.updateSection(this.section) });
+    },
+    watch: {
+        section(newSection, oldSection) {
+            if (this.changesPresent) {
+                this.updateSection(oldSection);
+            }
+
+            this.timer.cancel();
+        }
     },
     computed: {
         startDate: {
@@ -75,20 +92,36 @@ export default {
             set(newValue) {
                 if (!this.section) return;
                 const mEnd = moment(this.section.end);
-                const nEnd = moment(newValue);
+                const nEnd = moment(newValue, 'HH:mm');
 
                 mEnd.set({ hour: nEnd.hour(), minute: nEnd.minute() });
                 this.section.end = mEnd.format('M/DD/YYYY, HH:mm');
             }
-        },
-        weeklyRepeat: {
-            get() {
-                if (!this.section) return undefined;
-                return this.section.weeklyRepeat;
-            },
-            set(newValue) {
-                this.section.weeklyRepeat = Number(newValue);
+        }
+    },
+    methods: {
+        updateSection(section) {
+            console.log('Attempting update');
+            this.timer.cancel();
+
+            if (this.changesPresent) {
+                api.updateSection(section);
             }
+
+            this.changesPresent = false;
+        },
+        registerChange() {
+            console.log('Changed');
+            this.changesPresent = true;
+
+            if (this.timer.isOn) this.timer.reset();
+            else this.timer.begin();
+
+            this.$emit('change', this.section);
+        },
+        deleteSection() {
+            this.timer.cancel();
+            this.$emit('delete');
         }
     }
 }
