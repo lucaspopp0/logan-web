@@ -15,7 +15,6 @@ export default {
     components: { TaskListItem, TaskDetailView },
     data() {
         return {
-            tasks: [],
             data: new TableData(),
             updateTimer: undefined,
             currentSelection: undefined
@@ -106,11 +105,16 @@ export default {
                 completed: false
             };
 
+            const flatData = this.data.flat();
+            flatData.push(newTask);
+            this.sortExistingData(flatData);
+            this.select(newTask);
+
             api.addTask(newTask)
             .then(response => {
-                this.tasks.push(response);
+                newTask.tid = response.tid;
                 this.select(response);
-                DataManager.fetchAllData();
+                this.updateTimer.fire();
             })
         },
         taskUpdated() {
@@ -121,10 +125,12 @@ export default {
 
             api.deleteTask(this.currentSelection)
             .then((response) => {
-                DataManager.fetchAllData();
+                this.updateTimer.fire();
             })
-            
-            this.tasks.splice(this.tasks.indexOf(this.currentSelection), 1);
+
+            const flatData = this.data.flat();
+            flatData.splice(flatData.indexOf(this.currentSelection), 1);
+            this.sortExistingData(flatData);
             this.select(undefined);
         },
     }
