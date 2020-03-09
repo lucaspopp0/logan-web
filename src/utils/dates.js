@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-function compareDates(d1, d2) {
+export function compareDates(d1, d2) {
     d1 = moment(d1);
     d2 = moment(d2);
 
@@ -9,7 +9,7 @@ function compareDates(d1, d2) {
     else return 1;
 }
 
-function dateOnly(d) {
+export function dateOnly(d) {
     const t = moment(d);
 
     t.set({
@@ -22,7 +22,7 @@ function dateOnly(d) {
     return t;
 }
 
-function readableDate(date, forSentence = false) {
+export function readableDate(date, forSentence = false) {
     const now = dateOnly(moment());
     date = dateOnly(date);
     const days = date.diff(now, 'days');
