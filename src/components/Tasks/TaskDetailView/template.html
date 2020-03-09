@@ -29,7 +29,7 @@
                     <tr>
                         <td>Priority</td>
                         <td>
-                            <select @change="registerChange" v-model="task.priority" :disabled="task.isFake">
+                            <select @change="registerChange" v-model.number="task.priority" :disabled="task.isFake">
                                 <option value=2>Really high</option>
                                 <option value=1>High</option>
                                 <option value=0>Normal</option>

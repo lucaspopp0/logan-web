@@ -65,7 +65,7 @@ export default {
         },
         dueDateValue: {
             get() {
-                if (this.dueDateType != 'd') return undefined;
+                if (this.dueDateType != 'd') return this.lastDateValue;
                 return moment(this.task.dueDate, DB_DATE_FORMAT).format(PICKER_DATE_FORMAT);
             },
             set(newValue) {
