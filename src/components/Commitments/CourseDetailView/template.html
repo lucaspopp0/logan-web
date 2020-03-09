@@ -1,17 +1,17 @@
 <div id="course-detail-view" class="fullheight">
     <div id="basic-info" class="section">
-        <input id="name-input" type="text" :value="course.name" placeholder="Name">
-        <input id="nickname-input" type="text" :value="course.nickname" placeholder="Nickname">
+        <input @input="registerChange" id="name-input" type="text" v-model="course.name" placeholder="Name" :disabled="course.isFake">
+        <input @input="registerChange" id="nickname-input" type="text" v-model="course.nickname" placeholder="Nickname" :disabled="course.isFake">
         <div style="display: flex;">
-            <input  style="width: auto; flex-grow: 1;" id="descriptor-input" type="text" :value="course.descriptor" placeholder="Descriptor (ex: ECON 101)">
-            <button style="flex-grow: 0; margin: 0px 0px 0px 3px; padding-left: 1em; padding-right: 1em;" class="delete-button" :disabled="!course">Delete Course</button>
+            <input @input="registerChange" :disabled="course.isFake" style="width: auto; flex-grow: 1;" id="descriptor-input" type="text" v-model="course.descriptor" placeholder="Descriptor (ex: ECON 101)">
+            <button @click="deleteCourse" style="flex-grow: 0; margin: 0px 0px 0px 3px; padding-left: 1em; padding-right: 1em;" class="delete-button" :disabled="course.isFake">Delete Course</button>
         </div>
     </div>
     <div id="sections-container">
         <div id="sections-list" class="small-list">
             <div id="section-head" class="logan-bg">
                 Sections
-                <button class="btn btn-sm btn-light" @click="newSection">+</button>
+                <button class="btn btn-sm btn-light" @click="newSection" :disabled="course.isFake">+</button>
             </div>
             <div class="list small-list selectable">
                 <section-list-item v-for="section of course.sections" :key="section.secid" :section="section" @click.native="select(section)" :class="{ active: section == currentSelection }"></section-list-item>

@@ -101,7 +101,7 @@ export default {
     },
     methods: {
         updateSection(section) {
-            console.log('Attempting update');
+            console.log('Attempting to update section');
             this.timer.cancel();
 
             if (this.changesPresent) {
@@ -111,7 +111,7 @@ export default {
             this.changesPresent = false;
         },
         registerChange() {
-            console.log('Changed');
+            console.log('Section changed');
             this.changesPresent = true;
 
             if (this.timer.isOn) this.timer.reset();
