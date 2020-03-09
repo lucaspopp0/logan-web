@@ -105,11 +105,10 @@ export default {
             })
         },
         deleteCurrentTask() {
-            console.log('delete');
             if (!this.currentSelection) return;
-            
-            api.deleteTask(_.pick(this.currentSelection, ['uid', 'tid']))
-            .then(response => {
+
+            api.deleteTask(this.currentSelection)
+            .then((response) => {
                 DataManager.fetchAllData();
             })
             
