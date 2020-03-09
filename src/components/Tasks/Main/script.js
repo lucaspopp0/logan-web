@@ -3,7 +3,7 @@ import api from '@/api'
 import DataManager from '@/data-manager';
 import TaskListItem from '../TaskListItem';
 import TaskDetailView from '../TaskDetailView'
-import moment, { now } from 'moment';
+import moment from 'moment';
 import _ from 'lodash';
 import sortingUtils from '@/utils/sorting';
 import TableData from '@/utils/table-data';

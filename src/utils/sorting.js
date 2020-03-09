@@ -24,14 +24,14 @@ function initialSortIncompleteTasks(task1, task2) {
         if (task2.dueDate === 'asap') return 0;
         else if (task2.dueDate === 'eventually') return -1;
         else {
-            if (moment(task2.dueDate).isBefore(now, 'date')) return 1;
+            if (moment(task2.dueDate).isBefore(now.clone().subtract(1, 'day'), 'date')) return 1;
             else return -1;
         }
     } else {
         const t1d = moment(task1.dueDate);
 
         if (task2.dueDate === 'asap') {
-            if (t1d.isBefore(now, 'date')) return -1;
+            if (t1d.isBefore(now.clone().subtract(1, 'day'), 'date')) return -1;
             else return 1;
         } else if (task2.dueDate === 'eventually') {
             return -1;
