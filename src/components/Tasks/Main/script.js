@@ -5,8 +5,10 @@ import TaskListItem from '../TaskListItem';
 import TaskDetailView from '../TaskDetailView'
 import moment from 'moment';
 import _ from 'lodash';
+import dateUtils from '@/utils/dates';
 import sortingUtils from '@/utils/sorting';
 import TableData from '@/utils/table-data';
+import { UpdateTimer } from '@/utils/timers';
 
 export default {
     name: 'tasks',
@@ -15,10 +17,13 @@ export default {
         return {
             tasks: [],
             data: new TableData(),
+            updateTimer: undefined,
             currentSelection: undefined
         }
     },
     mounted() {
+        this.updateTimer = new UpdateTimer(30000, DataManager.fetchAllData);
+
         DataManager.addListener(this);
 
         if (!DataManager.needsFetch()) {
@@ -30,9 +35,13 @@ export default {
     },
     methods: {
         updateTasks() {
+            this.updateTimer.reset();
+            this.sortExistingData(DataManager.getTasks());
+        },
+        sortExistingData(data) {
             const tempData = new TableData();
 
-            let tempTasks = [...DataManager.getTasks()];
+            let tempTasks = [...(data || this.data.flat())];
             tempTasks.sort(sortingUtils.initialTaskSortAlgorithm(false));
 
             const now = moment();
@@ -46,7 +55,7 @@ export default {
                     groupName = 'Eventually';
                 } else {
                     const dueDate = moment(task.dueDate);
-                    const days = dueDate.diff(now, 'days');
+                    const days = dateUtils.dateOnly(dueDate).diff(dateUtils.dateOnly(now), 'days');
 
                     if (days < 0) {
                         if (days === -1) {
@@ -103,6 +112,9 @@ export default {
                 this.select(response);
                 DataManager.fetchAllData();
             })
+        },
+        taskUpdated() {
+            this.sortExistingData();
         },
         deleteCurrentTask() {
             if (!this.currentSelection) return;

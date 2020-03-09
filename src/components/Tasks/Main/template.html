@@ -13,6 +13,6 @@
         </div>
     </div>
     <div id="task-detail" class="panel list-detail">
-        <task-detail-view class="fullheight" :task="currentSelection" @delete="deleteCurrentTask"></task-detail-view>
+        <task-detail-view class="fullheight" :task="currentSelection" @change="taskUpdated" @delete="deleteCurrentTask"></task-detail-view>
     </div>
 </div>
