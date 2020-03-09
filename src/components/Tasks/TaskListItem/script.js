@@ -3,7 +3,12 @@ import moment from 'moment';
 
 export default {
     name: 'task-list-item',
-    props: ['task'],
+    props: {
+        task: {
+            required: true,
+            type: Object
+        }
+    },
     data() {
         return {}
     },
