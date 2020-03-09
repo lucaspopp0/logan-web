@@ -1,14 +1,21 @@
 import Vue from 'vue';
 import DataManager from '@/data-manager';
 
-// TODO: Add listener logic
 export default {
     name: 'course-select',
-    props: ['value'],
+    props: {
+        value: {
+            type: Object,
+            default() {
+                return {
+                    cid: 'none'
+                }
+            }
+        }
+    },
     data() {
         return {
             semesters: [],
-            current: undefined,
             idMap: {}
         }
     },
@@ -21,6 +28,16 @@ export default {
     },
     beforeDestroy() {
         DataManager.removeListener(this);
+    },
+    computed: {
+        current: {
+            get() {
+                return this.value.cid;
+            },
+            set(newValue) {
+                this.$emit('input', this.idMap[newValue]);
+            }
+        }
     },
     methods: {
         dmEvent(event, data) {
@@ -36,9 +53,6 @@ export default {
                     this.idMap[course.cid] = course;
                 }
             }
-        },
-        updateValue() {
-            this.$emit('input', this.idMap[current]);
         }
     }
 }

@@ -1,4 +1,4 @@
-<select class="course-select" v-model="value && value.cid || 'none'">
+<select class="course-select" v-model="current">
     <option value="none">None</option>
     <template v-for="semester of semesters">
         <option disabled></option>
