@@ -1,16 +1,16 @@
 <div id="section-detail-view" class="fullheight">
     <div class="section">
         <div class="input-container">
-            <input type="text" placeholder="Name" v-model="section && section.name">
+            <input type="text" placeholder="Name" v-model="section.name" :disabled="section.isFake">
         </div>
         <div class="input-container">
-            <input type="text" placeholder="Location" v-model="section && section.location">
+            <input type="text" placeholder="Location" v-model="section.location" :disabled="section.isFake">
         </div>
-        <p>Term begins <input type="date" v-model="startDate"> and ends <input type="date" v-model="endDate"></p>
-        <p>Occurs from <input type="time" v-model="startTime"> until <input type="time" v-model="endTime"></p>
-        <p>Repeats every <select v-model="weeklyRepeat"><option v-for="n in 3">{{ n }}</option></select> weeks on <dow-picker v-model="section && section.daysOfWeek"></dow-picker></p>
+        <p>Term begins <input type="date" v-model="startDate" :disabled="section.isFake"> and ends <input type="date" v-model="endDate" :disabled="section.isFake"></p>
+        <p>Occurs from <input type="time" v-model="startTime" :disabled="section.isFake"> until <input type="time" v-model="endTime" :disabled="section.isFake"></p>
+        <p>Repeats every <select v-model.number="section.weeklyRepeat" :disabled="section.isFake"><option v-for="n in 3">{{ n }}</option></select> weeks on <dow-picker v-model="section.daysOfWeek" :disabled="section.isFake"></dow-picker></p>
     </div>
     <div class="delete-container">
-        <button class="delete-button" :disabled="!section">Delete Section</button>
+        <button class="delete-button" :disabled="section.isFake">Delete Section</button>
     </div>
 </div>

@@ -5,7 +5,22 @@ import DOWPicker from '@/components/Controls/DOWPicker';
 export default {
     name: 'section-detail-view',
     components: { DowPicker: DOWPicker },
-    props: ['section'],
+    props: {
+        section: {
+            type: Object,
+            default() {
+                return {
+                    name: '',
+                    location: '',
+                    weeklyRepeat: 1,
+                    daysOfWeek: '',
+                    start: '',
+                    end: '',
+                    isFake: true
+                }
+            }
+        }
+    },
     data() {
         return {}
     },
