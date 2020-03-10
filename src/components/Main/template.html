@@ -19,7 +19,10 @@
         </div>
         <div class="form-inline">
             <template v-if="isSignedIn">
-                <a class="btn btn-light" v-on:click="sync">Sync</a>
+                <button class="btn btn-light" v-on:click="sync" style="margin-right: 4px;" :disabled="syncing">
+                    {{ syncing ? 'Syncing' : 'Sync' }}
+                </button>
+                
                 <div class="dropdown">
                     <a class="btn btn-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Lucas Popp
