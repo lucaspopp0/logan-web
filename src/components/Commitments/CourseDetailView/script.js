@@ -24,7 +24,7 @@ export default {
     },
     data() {
         return {
-            currentSelection: null,
+            currentSelection: undefined,
             changesPresent: false,
             timer: undefined
         }
