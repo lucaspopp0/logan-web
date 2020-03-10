@@ -2,6 +2,7 @@ import api from '@/api'
 
 const EventType = {
     SIGNIN: 'signin',
+    FETCH_START: 'fetch-start',
     FETCH_COMPLETE: 'fetch-complete'
 };
 
@@ -64,6 +65,8 @@ async function fetchCurrentUser() {
 }
 
 async function fetchAllData() {
+    sendEventToListeners(EventType.FETCH_START);
+
     if (currentAuthStatus != AuthStatus.SUCCESS) {
         console.error('Cannot fetch before establishing auth');
         return;
