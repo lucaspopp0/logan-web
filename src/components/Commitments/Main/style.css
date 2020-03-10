@@ -1,0 +1,8 @@
+#leftsidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+#commitment-list {
+    flex-grow: 1;
+}

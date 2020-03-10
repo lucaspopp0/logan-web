@@ -4,6 +4,8 @@ import SemesterListItem from '../SemesterListItem';
 import CourseListItem from '../CourseListItem';
 import CourseDetailView from '../CourseDetailView';
 import { UpdateTimer } from '@/utils/timers';
+import moment from 'moment';
+import api from '@/api';
 
 export default {
     name: 'commitments',
@@ -53,6 +55,41 @@ export default {
             if (event === DataManager.EventType.FETCH_COMPLETE) {
                 this.updateData();
             }
+        },
+        newSemester() {
+            const newSemester = {
+                sid: 'new',
+                name: 'New Semester',
+                startDate: moment().format('M/D/YYYY'),
+                endDate: moment().format('M/D/YYYY')
+            };
+
+            this.semesters.push(newSemester);
+            this.selectSemester(newSemester);
+
+            api.addSemester(newSemester)
+            .then(response => {
+                this.updateTimer.fire();
+                this.selectSemester(response);
+            })
+        },
+        newCourse() {
+            const newCourse = {
+                cid: 'newCourse',
+                sid: this.currentSelection.value.sid,
+                name: 'New Course',
+                color: '000000'
+            };
+
+            const currentSemester = this.currentSelection.type === 'semester' ? this.currentSelection.value : this.currentSelection.value.semester;
+            currentSemester.courses.push(newCourse);
+            this.selectCourse(newCourse);
+
+            api.addCourse(newCourse)
+            .then(response => {
+                this.updateTimer.fire();
+                this.selectCourse(response);
+            })
         },
         courseDeleted() {
             if (this.currentSelection.type === 'course') {

@@ -1,8 +1,14 @@
 <div id="commitments" class="fullheight">
-    <div id="commitment-list" class="panel list small-list selectable">
-        <div class="list-group" v-for="semester in semesters" :key="semester.sid">
-            <semester-list-item :semester="semester" @click.native="selectSemester(semester)" :class="{ active: semester == currentSelection.value }"></semester-list-item>
-            <course-list-item v-for="course in semester.courses" :key="course.cid" :course="course" @click.native="selectCourse(course)" :class="{ active: course == currentSelection.value }"></course-list-item>
+    <div id="leftsidebar" class="panel">
+        <div id="commitment-list" class="list small-list selectable">
+            <div class="list-group" v-for="semester in semesters" :key="semester.sid">
+                <semester-list-item :semester="semester" @click.native="selectSemester(semester)" :class="{ active: semester == currentSelection.value }"></semester-list-item>
+                <course-list-item v-for="course in semester.courses" :key="course.cid" :course="course" @click.native="selectCourse(course)" :class="{ active: course == currentSelection.value }"></course-list-item>
+            </div>
+        </div>
+        <div class="action-bar logan-bg">
+            <button class="btn btn-light btn-sm" @click="newSemester">New Semester</button>
+            <button class="btn btn-light btn-sm" @click="newCourse" :disabled="!currentSelection.value">New Course</button>
         </div>
     </div>
     <div id="commitment-detail" class="panel list-detail">
