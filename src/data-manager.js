@@ -23,8 +23,6 @@ let tasks = [];
 
 let listeners = [];
 
-const DEV_BEARER = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZDU1ZmY0ZTEwOTkxZDZiMGVmZDM5MmI5MWEzM2U1NGMwZTIxOGIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMjYxMTMyNjE4OTg1LW00ZWI5aHV1cW9zZmRkaWJnMTdqZ201MGQ2OWcwa2kzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMjYxMTMyNjE4OTg1LW00ZWI5aHV1cW9zZmRkaWJnMTdqZ201MGQ2OWcwa2kzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAxNjI2MDYyNjUxNzI2NDAwMzk4IiwiaGQiOiJjYXNlLmVkdSIsImVtYWlsIjoibG1wMTIyQGNhc2UuZWR1IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJBelFnYldBRkdjdm0tNERVeVNLLVJRIiwibmFtZSI6Ikx1Y2FzIFBvcHAiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FPaDE0R2hKZC1SRHB3dUJ6djA0eFo5M0FnU1BLVU1ZRTVBbFoyX1R2a2FUVnc9czk2LWMiLCJnaXZlbl9uYW1lIjoiTHVjYXMiLCJmYW1pbHlfbmFtZSI6IlBvcHAiLCJsb2NhbGUiOiJlbiIsImlhdCI6MTU4MzE1NjczNSwiZXhwIjoxNTgzMTYwMzM1LCJqdGkiOiI2N2Q4NDQxZWY5NzMzMTA4ZTFkZmNlZDlkYjhmMDc2NzcxNmJiYWFhIn0.bnLDUgyyVQ8h8kNH5m_sEx-JTB0WYnZUJ7y29lj2kD77FaT7D6Sq7XohZsooJqBlLyseDqOpnjHOX1ydsHwbX-uxY6F-j1We-ztRDqFlkYnH0a-poJSQ-YlKhldmLTtdZPs-SW2hGUAX6RB0I9jRlFl7QrLdp1Xj7Xmidgt-QnIc88JBdTz5ndm69tpBaJakaU2Rdf-yX_rTx8xTSYNPbrlC3h51Doa0GlgeUnSLfRImiJqHclbpZGqbyI42mYFQNlvvfrAhLXHIHLuze9W_E9QdR_6boG-a_kZHUE2yoFYtbM8A_BSBIZsd8EBnZ81vJGdIkpkpotv0EkGf32WikQ';
-
 function sendEventToListeners(event, data) {
     for (const listener of listeners) {
         if (!!listener.dmEvent) listener.dmEvent(event, data);
@@ -39,8 +37,6 @@ async function signIn(googleUser) {
     if (process.env.NODE_ENV == 'production') {
         idToken = googleUser.getAuthResponse().id_token;
         console.log(idToken);
-    } else if (process.env.NODE_ENV == 'development') {
-        idToken = DEV_BEARER;
     }
 
     currentAuthStatus = AuthStatus.ESTABLISHING;

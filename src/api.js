@@ -22,8 +22,12 @@ async function execute(method, path, data, ignoreAuth=false) {
 }
 
 async function establishAuth(idToken) {
-    const { bearer } = await execute('post', '/auth', { idToken }, true);
-    BEARER = bearer;
+    if (process.env.NODE_ENV == 'production') {
+        const { bearer } = await execute('post', '/auth', { idToken }, true);
+        BEARER = bearer;
+    } else {
+        BEARER = 'DEV lmp122@case.edu';
+    }
 }
 
 async function getCurrentUser() {
