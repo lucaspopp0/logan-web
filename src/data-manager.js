@@ -131,8 +131,13 @@ async function fetchAllData() {
 
     // Load tasks
     for (const task of tempTasks) {
-        if (!!task.commitmentId) task.course = idMap.courses[task.commitmentId];
-        if (!!task.aid) task.relatedAssignment = idMap.assignments[task.aid];
+        if (!!task.relatedAid) {
+            task.relatedAssignment = idMap.assignments[task.relatedAid];
+            task.commitmentId = task.relatedAssignment.cid;
+            task.course = task.relatedAssignment.course;
+        } else if (!!task.commitmentId) {
+            task.course = idMap.courses[task.commitmentId];
+        }
     }
 
     semesters = tempSemesters;
