@@ -3,15 +3,17 @@ import moment from 'moment';
 import DOWPicker from '@/components/Controls/DOWPicker';
 import { UpdateTimer } from '@/utils/timers';
 import api from '@/api';
+import { Section } from '@/data-types';
+import { PICKER_DATE_FORMAT } from '@/utils/dates';
 
 export default {
     name: 'section-detail-view',
     components: { DowPicker: DOWPicker },
     props: {
         section: {
-            type: Object,
+            type: Section,
             default() {
-                return {
+                return new Section({
                     name: '',
                     location: '',
                     weeklyRepeat: 1,
@@ -19,7 +21,7 @@ export default {
                     start: '',
                     end: '',
                     isFake: true
-                }
+                });
             }
         }
     },
@@ -45,35 +47,35 @@ export default {
         startDate: {
             get() {
                 if (!this.section) return undefined;
-                return moment(this.section.start).format('YYYY-MM-DD');
+                return this.section.start.format(PICKER_DATE_FORMAT);
             },
             set(newValue) {
                 if (!this.section) return;
                 const mStart = moment(this.section.start);
-                const nStart = moment(newValue);
+                const nStart = moment(newValue, PICKER_DATE_FORMAT);
 
                 mStart.set({ year: nStart.year(), month: nStart.month(), date: nStart.date() });
-                this.section.start = mStart.format('M/DD/YYYY, HH:mm');
+                this.section.start = mStart;
             }
         },
         endDate: {
             get() {
                 if (!this.section) return undefined;
-                return moment(this.section.end).format('YYYY-MM-DD');
+                return this.section.end.format(PICKER_DATE_FORMAT);
             },
             set(newValue) {
                 if (!this.section) return;
                 const mEnd = moment(this.section.end);
-                const nEnd = moment(newValue);
+                const nEnd = moment(newValue, PICKER_DATE_FORMAT);
 
                 mEnd.set({ year: nEnd.year(), month: nEnd.month(), date: nEnd.date() });
-                this.section.end = mEnd.format('M/DD/YYYY, HH:mm');
+                this.section.end = mEnd;
             }
         },
         startTime: {
             get() {
                 if (!this.section) return undefined;
-                return moment(this.section.start).format('HH:mm');
+                return this.section.start.format('HH:mm');
             },
             set(newValue) {
                 if (!this.section) return;
@@ -81,13 +83,13 @@ export default {
                 const nStart = moment(newValue, 'HH:mm');
 
                 mStart.set({ hour: nStart.hour(), minute: nStart.minute() });
-                this.section.start = mStart.format('M/DD/YYYY, HH:mm');
+                this.section.start = mStart;
             }
         },
         endTime: {
             get() {
                 if (!this.section) return undefined;
-                return moment(this.section.end).format('HH:mm');
+                return this.section.end.format('HH:mm');
             },
             set(newValue) {
                 if (!this.section) return;

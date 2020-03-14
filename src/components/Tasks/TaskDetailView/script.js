@@ -2,18 +2,17 @@ import CourseSelect from '@/components/Controls/CourseSelect';
 import moment from 'moment';
 import { UpdateTimer } from '@/utils/timers.js';
 import api from '@/api';
-
-const DB_DATE_FORMAT = 'M/D/YYYY';
-const PICKER_DATE_FORMAT = 'YYYY-MM-DD';
+import { PICKER_DATE_FORMAT } from '@/utils/dates';
+import { Task } from '@/data-types';
 
 export default {
     name: 'task-detail-view',
     components: { CourseSelect },
     props: {
         task: {
-            type: Object,
+            type: Task,
             default() {
-                return {
+                return new Task({
                     uid: undefined,
                     tid: 'misc',
                     title: '',
@@ -21,7 +20,7 @@ export default {
                     priority: 0,
                     completed: false,
                     isFake: true
-                }
+                });
             }
         }
     },
@@ -44,9 +43,9 @@ export default {
             this.timer.cancel();
             
             if (this.dueDateType === 'd') {
-                this.lastDateValue = moment(this.task.dueDateValue, PICKER_DATE_FORMAT).format(DB_DATE_FORMAT);
+                this.lastDateValue = this.task.dueDate;
             } else {
-                this.lastDateValue = moment().format(DB_DATE_FORMAT);
+                this.lastDateValue = moment();
             }
         }
     },
@@ -65,11 +64,11 @@ export default {
         },
         dueDateValue: {
             get() {
-                if (this.dueDateType != 'd') return this.lastDateValue;
-                return moment(this.task.dueDate, DB_DATE_FORMAT).format(PICKER_DATE_FORMAT);
+                if (this.dueDateType != 'd') return this.lastDateValue.format(PICKER_DATE_FORMAT);
+                return this.task.dueDate.format(PICKER_DATE_FORMAT);
             },
             set(newValue) {
-                this.task.dueDate = moment(newValue, PICKER_DATE_FORMAT).format(DB_DATE_FORMAT);
+                this.task.dueDate = moment(newValue, PICKER_DATE_FORMAT);
                 this.lastDateValue = this.task.dueDate;
             }
         }

@@ -5,6 +5,8 @@ import moment from 'moment';
 import Vue from 'vue';
 import DataManager from '@/data-manager';
 import api from '@/api';
+import dateUtils from '@/utils/dates';
+import { Assignment } from '@/data-types';
 
 export default {
     name: 'assignments',
@@ -36,11 +38,26 @@ export default {
         updateData() {
             const tempData = new TableData();
             let tempAssignments = [...DataManager.getAssignments()];
+
             // Sort assignments
+            const now = dateUtils.dateOnly(moment());
+
+            tempAssignments = tempAssignments.filter(assignment => {
+                if (assignment.dueDate === 'asap' || assignment.dueDate === 'eventually') return true;
+                else return assignment.dueDate.isSameOrAfter(now);
+            });
+
+            tempAssignments.sort(dateUtils.compareDueDates);
 
             // Group assignments
             for (const assignment of tempAssignments) {
-                tempData.addItem('All', assignment);
+                if (assignment.dueDate === 'asap') {
+                    tempData.addItem('ASAP', assignment);
+                } else if (assignment.dueDate === 'eventually') {
+                    tempData.addItem('Eventually', assignment);
+                } else {
+                    tempData.addItem(dateUtils.readableDate(assignment.dueDate), assignment);
+                }
             }
 
             // Sort groups
@@ -48,11 +65,11 @@ export default {
             this.data = tempData;
         },
         newAssignment() {
-            const newAssignment = {
+            const newAssignment = new Assignment({
                 aid: 'new',
                 title: 'Untitled assignment',
                 dueDate: moment().format('MM/DD/YYYY HH:mm')
-            };
+            });
 
             api.addAssignment(newAssignment)
             .then(response => {

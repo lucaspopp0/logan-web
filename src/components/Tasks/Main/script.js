@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import api from '@/api'
 import DataManager from '@/data-manager';
 import TaskListItem from '../TaskListItem';
@@ -9,6 +8,7 @@ import dateUtils from '@/utils/dates';
 import sortingUtils from '@/utils/sorting';
 import TableData from '@/utils/table-data';
 import { UpdateTimer } from '@/utils/timers';
+import { Task } from '@/data-types';
 
 export default {
     name: 'tasks',
@@ -53,7 +53,7 @@ export default {
                 } else if (task.dueDate === 'eventually') {
                     groupName = 'Eventually';
                 } else {
-                    const dueDate = moment(task.dueDate);
+                    const dueDate = task.dueDate;
                     const days = dateUtils.dateOnly(dueDate).diff(dateUtils.dateOnly(now), 'days');
 
                     if (days < 0) {
@@ -66,16 +66,8 @@ export default {
                         } else {
                             groupName = 'Overdue';
                         }
-                    } else if (days === 0) {
-                        groupName = 'Today';
-                    } else if (days === 1) {
-                        groupName = 'Tomorrow';
-                    } else if (dueDate.week() === now.week()) {
-                        groupName = dueDate.format('dddd');
-                    } else if (dueDate.year() === now.year()) {
-                        groupName = dueDate.format('dddd, MMM Do');
                     } else {
-                        groupName = dueDate.format('dddd, MMM Do, YYYY');
+                        groupName = dateUtils.readableDate(dueDate);
                     }
                 }
 
@@ -97,13 +89,13 @@ export default {
             this.currentSelection = task;
         },
         newTask() {
-            const newTask = {
+            const newTask = new Task({
                 tid: 'newtask',
                 title: 'Untitled task',
-                dueDate: moment().format('MM/DD/YYYY'),
+                dueDate: moment(),
                 priority: 0,
                 completed: false
-            };
+            });
 
             const flatData = this.data.flat();
             flatData.push(newTask);

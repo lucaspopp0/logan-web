@@ -40,7 +40,9 @@ export class Course extends DBObj {
     }
 
     forDB() {
-        return _.omit(super.forDB(), ['semester', 'sections']);
+        const out = super.forDB();
+        out.sid = out.semester.sid;
+        return _.omit(out, ['semester', 'sections']);
     }
 
 }
@@ -54,7 +56,9 @@ export class Section extends DBObj {
     }
 
     forDB() {
-        return _.omit(super.forDB(), ['course']);
+        const out = super.forDB();
+        out.cid = out.course.cid;
+        return out;
     }
 
 }
@@ -70,9 +74,10 @@ export class Assignment extends DBObj {
     }
 
     forDB() {
-        let out = _.omit(super.forDB(), ['course', 'tasks']);
+        let out = super.forDB();
+        if (!!out.course) out.commitmentId = out.course.cid;
         if (out.dueDate !== 'asap' && out.dueDate !== 'eventually') out.dueDate = out.dueDate.format(DB_DATE_FORMAT);
-        return out;
+        return _.omit(out, ['course', 'tasks']);
     }
 
 }
@@ -92,10 +97,14 @@ export class Task extends DBObj {
     }
 
     forDB() {
-        let out = _.omit(super.forDB(), ['course', 'relatedAssignment']);
+        let out = super.forDB();
+
+        if (!!out.relatedAssignment) out.relatedAid = out.relatedAssignment.aid;
+        else if (!!out.course) out.commitmentId = out.course.cid;
+
         if (out.dueDate !== 'asap' && out.dueDate !== 'eventually') out.dueDate = out.dueDate.format(DB_DATE_FORMAT);
         if (!!out.completionDate) out.completionDate = out.completionDate.format(DB_DATE_FORMAT);
-        return out;
+        return _.omit(out, ['course', 'relatedAssignment']);;
     }
 
 }

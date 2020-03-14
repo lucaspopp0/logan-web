@@ -4,21 +4,22 @@ import DataManager from '@/data-manager';
 import SectionListItem from '../SectionListItem'
 import SectionDetailView from '../SectionDetailView'
 import { UpdateTimer } from '@/utils/timers';
+import { Course, Section } from '@/data-types';
 
 export default {
     name: 'course-detail-view',
     components: { SectionListItem, SectionDetailView },
     props: {
         course: {
-            type: Object,
+            type: Course,
             default() {
-                return {
+                return new Course({
                     name: '',
                     nickname: '',
                     descriptor: '',
                     sections: [],
                     isFake: true
-                };
+                });
             }
         }
     },
@@ -71,13 +72,13 @@ export default {
             this.currentSelection = section;
         },
         newSection() {
-            let newsec = {
+            let newsec = new Section({
                 cid: this.course.cid,
                 name: 'Untitled',
                 weeklyRepeat: 1,
-                start: moment(this.course.semester.startDate).format('MM/DD/YYYY HH:mm'),
-                end: moment(this.course.semester.endDate).format('MM/DD/YYYY HH:mm'),
-            }
+                start: this.course.semester.startDate.format('MM/DD/YYYY HH:mm'),
+                end: this.course.semester.endDate.format('MM/DD/YYYY HH:mm'),
+            });
 
             api.addSection(newsec)
             .then(response => {

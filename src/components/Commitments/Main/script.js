@@ -6,6 +6,7 @@ import CourseDetailView from '../CourseDetailView';
 import { UpdateTimer } from '@/utils/timers';
 import moment from 'moment';
 import api from '@/api';
+import { Semester, Course } from '@/data-types';
 
 export default {
     name: 'commitments',
@@ -57,12 +58,12 @@ export default {
             }
         },
         newSemester() {
-            const newSemester = {
+            const newSemester = new Semester({
                 sid: 'new',
                 name: 'New Semester',
                 startDate: moment().format('M/D/YYYY'),
                 endDate: moment().format('M/D/YYYY')
-            };
+            });
 
             this.semesters.push(newSemester);
             this.selectSemester(newSemester);
@@ -74,12 +75,12 @@ export default {
             })
         },
         newCourse() {
-            const newCourse = {
+            const newCourse = new Course({
                 cid: 'newCourse',
                 sid: this.currentSelection.value.sid,
                 name: 'New Course',
                 color: '000000'
-            };
+            });
 
             const currentSemester = this.currentSelection.type === 'semester' ? this.currentSelection.value : this.currentSelection.value.semester;
             currentSemester.courses.push(newCourse);

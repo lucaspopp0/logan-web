@@ -42,11 +42,11 @@ async function getSemesters() {
 }
 
 async function addSemester(semester) {
-    return await execute('post', '/semesters', semester.forDB());
+    return new Semester(await execute('post', '/semesters', semester.forDB()));
 }
 
 async function updateSemester(semester) {
-    return await execute('put', '/semesters', semester.forDB());
+    return new Semester(await execute('put', '/semesters', semester.forDB()));
 }
 
 async function deleteSemester(semester) {
@@ -60,11 +60,11 @@ async function getCourses() {
 }
 
 async function addCourse(course) {
-    return await execute('post', '/courses', course.forDB());
+    return new Course(await execute('post', '/courses', course.forDB()));
 }
 
 async function updateCourse(course) {
-    return await execute('put', '/courses', course.forDB());
+    return new Course(await execute('put', '/courses', course.forDB()));
 }
 
 async function deleteCourse(course) {
@@ -78,11 +78,11 @@ async function getSections() {
 }
 
 async function addSection(section) {
-    return await execute('post', '/sections', section.forDB());
+    return new Section(await execute('post', '/sections', section.forDB()));
 }
 
 async function updateSection(section) {
-    return await execute('put', '/sections', section.forDB());
+    return new Section(await execute('put', '/sections', section.forDB()));
 }
 
 async function deleteSection(section) {
@@ -96,11 +96,11 @@ async function getAssignments() {
 }
 
 async function addAssignment(assignment) {
-    return await execute('post', '/assignments', assignment.forDB());
+    return new Assignment(await execute('post', '/assignments', assignment.forDB()));
 }
 
 async function updateAssignment(assignment) {
-    return await execute('put', '/assignments', assignment.forDB());
+    return new Assignment(await execute('put', '/assignments', assignment.forDB()));
 }
 
 async function deleteAssignment(assignment) {
@@ -114,11 +114,11 @@ async function getTasks() {
 }
 
 async function addTask(task) {
-    return await execute('post', '/tasks', task.forDB());
+    return new Task(await execute('post', '/tasks', task.forDB()));
 }
 
 async function updateTask(task) {
-    return await execute('put', '/tasks', task.forDB());
+    return new Task(await execute('put', '/tasks', task.forDB()));
 }
 
 async function deleteTask(task) {

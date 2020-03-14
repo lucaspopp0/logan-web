@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export const DB_DATE_FORMAT = 'M/D/YYYY';
-export const DB_DATETIME_FORMAT = 'M/D/YYYY HH:mm';
+export const DB_DATETIME_FORMAT = 'M/D/YYYY, HH:mm';
 export const PICKER_DATE_FORMAT = 'YYYY-MM-DD';
 
 export function compareDates(d1, d2) {
@@ -56,7 +56,7 @@ export function readableDate(date, forSentence = false) {
     } else if (days < 0 && days >= -6) {
         return (forSentence ? 'last ' : 'Last ') + date.format('dddd');
     } else if (date.year() == now.year()) {
-        return date.format('MMM Do');
+        return date.format('MMMM Do');
     } else {
         return date.format('MMMM Do, YYYY');
     }
