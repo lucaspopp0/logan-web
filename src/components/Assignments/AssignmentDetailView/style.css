@@ -1,0 +1,18 @@
+.assignment-detail-view {
+    display: flex;
+    flex-direction: column;
+}
+
+textarea {
+    width: 100%;
+    height: calc(10px + 1.5em);
+    min-height: calc(10px + 1.5em);
+}
+
+#title-input {
+    font-size: 1.2em;
+}
+
+#props-table td {
+    padding: 2px 7px;
+}
