@@ -1,10 +1,23 @@
 <div id="course-detail-view" class="fullheight">
     <div id="basic-info" class="section">
-        <input @input="registerChange" id="name-input" type="text" v-model="course.name" placeholder="Name" :disabled="course.isFake">
-        <input @input="registerChange" id="nickname-input" type="text" v-model="course.nickname" placeholder="Nickname" :disabled="course.isFake">
-        <div style="display: flex;">
-            <input @input="registerChange" :disabled="course.isFake" style="width: auto; flex-grow: 1;" id="descriptor-input" type="text" v-model="course.descriptor" placeholder="Descriptor (ex: ECON 101)">
-            <button @click="deleteCourse" style="flex-grow: 0; margin: 0px 0px 0px 3px; padding-left: 1em; padding-right: 1em;" class="delete-button" :disabled="course.isFake">Delete Course</button>
+        <div id="primary-container">
+            <div id="course-color" :style="{ background: '#' + course.color }"></div>
+            <input @input="registerChange" id="name-input" type="text" v-model="course.name" placeholder="Name" :disabled="course.isFake">
+            <button @click="deleteCourse" style="flex-grow: 0; margin: 0px 0px 0px 3px; padding-left: 1em; padding-right: 1em;" class="delete-button" :disabled="course.isFake">Delete<br>Course</button>
+        </div>
+        <div id="details-container">
+            <div>
+                <label>Nickname</label>
+                <input @input="registerChange" id="nickname-input" type="text" v-model="course.nickname" placeholder="Intro to Econ" :disabled="course.isFake">
+            </div>
+            <div>
+                <label>Descriptor</label>
+                <input @input="registerChange" id="descriptor-input" type="text" v-model="course.descriptor" placeholder="ECON 101" :disabled="course.isFake">
+            </div>
+            <div>
+                <label>Color</label>
+                <input @input="registerChange" id="color-input" type="text" v-model="course.color" placeholder="0032ed" :disabled="course.isFake">
+            </div>
         </div>
     </div>
     <div id="sections-container">
