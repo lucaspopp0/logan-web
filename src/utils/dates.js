@@ -9,6 +9,20 @@ export function compareDates(d1, d2) {
     else return 1;
 }
 
+export function compareDueDates(d1, d2) {
+    if (d1 === 'asap') {
+        if (d2 === 'asap') return 0;
+        else return -1;
+    } else if (d1 === 'eventually') {
+        if (d2 === 'eventually') return 0;
+        else return 1;
+    } else {
+        if (d2 === 'asap') return 1;
+        else if (d2 === 'eventually') return -1;
+        else return compareDates(d1, d2);
+    }
+}
+
 export function dateOnly(d) {
     const t = moment(d);
 
@@ -46,6 +60,7 @@ export function readableDate(date, forSentence = false) {
 
 export default {
     compareDates,
+    compareDueDates,
     dateOnly,
     readableDate
 }
