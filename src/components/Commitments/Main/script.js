@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import DataManager from '@/data-manager';
-import SemesterListItem from '../SemesterListItem';
-import CourseListItem from '../CourseListItem';
-import CourseDetailView from '../CourseDetailView';
+import { SemesterDetailView, SemesterListItem, CourseDetailView, CourseListItem } from '../'
 import { UpdateTimer } from '@/utils/timers';
 import moment from 'moment';
 import api from '@/api';
@@ -94,6 +92,9 @@ export default {
                 this.selectCourse(addedCourse);
             })
         },
+        semesterDeleted() {
+            console.warn('semesterDeleted() not implemented');
+        },
         courseDeleted() {
             if (this.currentSelection.type === 'course') {
                 const toDelete = this.currentSelection.value;
@@ -103,5 +104,5 @@ export default {
             }
         }
     },
-    components: { SemesterListItem, CourseListItem, CourseDetailView }
+    components: { SemesterDetailView, SemesterListItem, CourseListItem, CourseDetailView }
 }
