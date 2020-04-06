@@ -1,0 +1,15 @@
+<div id="semester-detail-view" class="fullheight">
+    <div class="section">
+        <input @input="registerChange" id="name-input" type="text" v-model="semester.name" placeholder="Name" :disabled="semester.isFake">
+        <div style="display: flex;">
+            <div style="flex-grow: 1;">
+                <b>Start Date</b>
+                <input type="date" v-model="startDate" @input="registerChange" :disabled="semester.isFake">
+            </div>
+            <div style="flex-grow: 1;">
+                <b>End Date</b>
+                <input type="date" v-model="endDate" @input="registerChange" :disabled="semester.isFake">
+            </div>
+        </div>
+    </div>
+</div>
