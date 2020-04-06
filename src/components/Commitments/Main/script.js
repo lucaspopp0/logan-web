@@ -93,6 +93,7 @@ export default {
             })
         },
         semesterDeleted() {
+            // TODO: Implement
             console.warn('semesterDeleted() not implemented');
         },
         courseDeleted() {
