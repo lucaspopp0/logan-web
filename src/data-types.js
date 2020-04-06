@@ -41,7 +41,7 @@ export class Course extends DBObj {
 
     forDB() {
         const out = super.forDB();
-        out.sid = out.semester.sid;
+        if (!out.sid && out.semester) out.sid = out.semester.sid;
         return _.omit(out, ['semester', 'sections']);
     }
 
@@ -57,7 +57,9 @@ export class Section extends DBObj {
 
     forDB() {
         const out = super.forDB();
-        out.cid = out.course.cid;
+        if (!out.cid && out.course) out.cid = out.course.cid;
+        out.start = out.start.format(DB_DATETIME_FORMAT);
+        out.end = out.end.format(DB_DATETIME_FORMAT);
         return _.omit(out, ['course']);
     }
 
