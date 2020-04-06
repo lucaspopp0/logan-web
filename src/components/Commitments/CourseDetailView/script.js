@@ -5,6 +5,7 @@ import SectionListItem from '../SectionListItem'
 import SectionDetailView from '../SectionDetailView'
 import { UpdateTimer } from '@/utils/timers';
 import { Course, Section } from '@/data-types';
+import { DB_DATETIME_FORMAT } from '@/utils/dates';
 
 export default {
     name: 'course-detail-view',
@@ -76,8 +77,8 @@ export default {
                 cid: this.course.cid,
                 name: 'Untitled',
                 weeklyRepeat: 1,
-                start: this.course.semester.startDate.format('MM/DD/YYYY HH:mm'),
-                end: this.course.semester.endDate.format('MM/DD/YYYY HH:mm'),
+                start: this.course.semester.startDate.format(DB_DATETIME_FORMAT),
+                end: this.course.semester.endDate.format(DB_DATETIME_FORMAT),
             });
 
             api.addSection(newsec)

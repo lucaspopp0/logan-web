@@ -88,8 +88,10 @@ export default {
 
             api.addCourse(newCourse)
             .then(response => {
+                const addedCourse = new Course(response);
+                addedCourse.semester = currentSemester;
                 this.updateTimer.fire();
-                this.selectCourse(response);
+                this.selectCourse(addedCourse);
             })
         },
         courseDeleted() {
