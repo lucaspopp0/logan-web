@@ -12,7 +12,7 @@
         <a class="task-title">{{ task.title }}</a>
 
         <!-- Due date -->
-        <p class="task-deadline" v-if="overdue">OVERDUE</p>
+        <p class="task-deadline" v-if="overdue">{{ overdueText }}</p>
 
         <!-- Description -->
         <p class="task-description" v-if="!!task.description">{{ task.description }}</p>

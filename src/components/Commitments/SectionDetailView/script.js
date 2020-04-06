@@ -4,7 +4,7 @@ import DOWPicker from '@/components/Controls/DOWPicker';
 import { UpdateTimer } from '@/utils/timers';
 import api from '@/api';
 import { Section } from '@/data-types';
-import { PICKER_DATE_FORMAT } from '@/utils/dates';
+import { PICKER_DATE_FORMAT, DB_DATETIME_FORMAT } from '@/utils/dates';
 
 export default {
     name: 'section-detail-view',
@@ -97,7 +97,7 @@ export default {
                 const nEnd = moment(newValue, 'HH:mm');
 
                 mEnd.set({ hour: nEnd.hour(), minute: nEnd.minute() });
-                this.section.end = mEnd.format('M/DD/YYYY, HH:mm');
+                this.section.end = mEnd;
             }
         }
     },

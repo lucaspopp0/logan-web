@@ -58,7 +58,7 @@ export class Section extends DBObj {
     forDB() {
         const out = super.forDB();
         out.cid = out.course.cid;
-        return out;
+        return _.omit(out, ['course']);
     }
 
 }

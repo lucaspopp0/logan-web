@@ -1,5 +1,6 @@
 import Checkbox from '@/components/Controls/Checkbox';
 import moment from 'moment';
+import dateUtils from '@/utils/dates';
 
 export default {
     name: 'task-list-item',
@@ -23,6 +24,9 @@ export default {
             const d = this.mDueDate;
             const today = moment(moment().format('MM-DD-YYYY'), 'MM-DD-YY');
             return d != null && d.isBefore(today);
+        },
+        overdueText() {
+            return 'Due ' + dateUtils.readableDate(this.mDueDate, true);
         }
     },
     components: { Checkbox }

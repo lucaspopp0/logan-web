@@ -56,18 +56,10 @@ export default {
                     const dueDate = task.dueDate;
                     const days = dateUtils.dateOnly(dueDate).diff(dateUtils.dateOnly(now), 'days');
 
-                    if (days < 0) {
-                        if (days === -1) {
-                            if (now.hour() <= 6) {
-                                groupName = 'Tonight';
-                            } else {
-                                groupName = 'Yesterday';
-                            }
-                        } else {
-                            groupName = 'Overdue';
-                        }
+                    if (days === -1 && now.hour() <= 6) {
+                        groupName = 'Tonight';
                     } else {
-                        groupName = dateUtils.readableDate(dueDate);
+                        groupName = 'Due ' + dateUtils.readableDate(dueDate);
                     }
                 }
 

@@ -16,8 +16,12 @@
     font-size: 0.9em;
 }
 
-.task-deadline, .task-description, .task-assignment {
+.task-description, .task-assignment {
     color: rgba(0, 0, 0, 0.5);
+}
+
+.task-deadline {
+    color: #e57373;
 }
 
 .task-commitment {

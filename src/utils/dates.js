@@ -51,6 +51,28 @@ export function readableDate(date, forSentence = false) {
         return forSentence ? 'tomorrow' : 'Tomorrow';
     } else if (days === -1) {
         return forSentence ? 'yesterday' : 'Yesterday';
+    } else if (days < 0 && !forSentence) {
+        const weeks = now.diff(date, 'weeks');
+
+        if (weeks == 0) {
+            return 'This Week'
+        } else if (weeks == 1) {
+            return 'Last Week'
+        } else if (weeks == 2) {
+            return 'Two Weeks Ago';
+        } else if (weeks < 4) {
+            return 'This Month';
+        } else if (weeks <= (4 * 6)) {
+            return 'The Past 6 Months'
+        } else if (weeks <= 52) {
+            return 'The Past Year'
+        } else if (weeks <= 104) {
+            return 'Two Years Ago'
+        } else if (weeks <= 52 * 5) {
+            return 'Five Years Ago'
+        } else {
+            return 'A Long Time Ago'
+        }
     } else if (days > 0 && days <= 6 && now.weekday() < date.weekday()) {
         return date.format('dddd');
     } else if (days < 0 && days >= -6) {
