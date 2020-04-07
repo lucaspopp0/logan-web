@@ -1,0 +1,5 @@
+.assignment-list-item {
+    flex-direction: column;
+    justify-content: left;
+    align-items: normal !important;
+}
