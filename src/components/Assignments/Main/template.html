@@ -13,6 +13,6 @@
         </div>
     </div>
     <div id="assignment-detail" class="panel list-detail">
-        <assignment-detail-view class="fullheight" :assignment="currentSelection.value" @delete="deleteCurrentAssignment"></assignment-detail-view>
+        <assignment-detail-view class="fullheight" :assignment="currentSelection.value" @delete="deleteCurrentAssignment" @change="assignmentUpdated"></assignment-detail-view>
     </div>
 </div>

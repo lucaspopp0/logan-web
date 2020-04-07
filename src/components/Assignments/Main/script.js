@@ -36,12 +36,15 @@ export default {
             }
         },
         updateData() {
+            this.sortExistingData(DataManager.getAssignments());
+        },
+        sortExistingData(data) {
             const tempData = new TableData();
-            let tempAssignments = [...DataManager.getAssignments()];
-
+            let tempAssignments = [...(data || this.data.flat())];
+            
             // Sort assignments
             const now = dateUtils.dateOnly(moment());
-
+            
             tempAssignments = tempAssignments.filter(assignment => {
                 if (assignment.dueDate === 'asap' || assignment.dueDate === 'eventually') return true;
                 else return assignment.dueDate.isSameOrAfter(now);
@@ -80,6 +83,9 @@ export default {
         select(type, value) {
             Vue.set(this.currentSelection, 'type', type);
             Vue.set(this.currentSelection, 'value', value);
+        },
+        assignmentUpdated() {
+            this.sortExistingData();
         },
         deleteCurrentAssignment() {
             
