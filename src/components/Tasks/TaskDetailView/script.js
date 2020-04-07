@@ -31,10 +31,10 @@ export default {
         }
     },
     mounted() {
-        this.setup({
-            updateHandler: () => { api.updateTask(this.task) },
-            exitHandler: api.updateTask,
-            changeHandler: () => { this.$emit('change', this.task) }
+        this.setupHandlers({
+            update: () => { api.updateTask(this.task) },
+            exit: api.updateTask,
+            change: () => { this.$emit('change', this.task) }
         });
     },
     watch: {

@@ -2,31 +2,24 @@ import { UpdateTimer } from '@/utils/timers';
 
 export default {
 
-    data() {
-        return {
-            _changesPresent: false,
-            _timer: undefined,
-            _updateHandler: () => {},
-            _exitHandler: () => {},
-            _changeHandler: () => {},
-            _deleteHandler: () => {}
-        }
+    created () {
+        this._changesPresent = false;
     },
 
     methods: {
 
-        setup(options) {
-            this._updateHandler = options.updateHandler || (() => {});
-            this._exitHandler = options.exitHandler || (() => {});
-            this._changeHandler = options.changeHandler || (() => {});
-            this._deleteHandler = options.deleteHandler || (() => {});
+        setupHandlers(options) {
+            this._updateFn = options.update || (() => {});
+            this._exitFn = options.exit || (() => {});
+            this._changeFn = options.change || (() => {});
+            this._deleteFn = options.delete || (() => {});
 
             this._timer = new UpdateTimer(options.timeout || 2000, this._performUpdate);
         },
 
         propertyChanged(oldValue) {
             if (this._changesPresent) {
-                this._exitHandler(oldValue);
+                this._exitFn(oldValue);
             }
 
             this._timer.cancel();
@@ -37,7 +30,7 @@ export default {
             this._timer.cancel();
             
             if (this._changesPresent) {
-                this._updateHandler();
+                this._updateFn();
             }
 
             this._changesPresent = false;
@@ -49,13 +42,13 @@ export default {
             if (this._timer.isOn) this._timer.reset();
             else this._timer.begin();
 
-            this._changeHandler();
+            this._changeFn();
         },
 
         performDelete() {
             this._timer.cancel();
             this.$emit('delete');
-            this._deleteHandler();
+            this._deleteFn();
         }
 
     },
