@@ -33,7 +33,7 @@ export default {
     },
     watch: {
         assignment(newAss, oldAss) {
-            this.propertyChanged(oldAss);
+            this.handlePropChange(oldAss);
 
             if (this.dueDateType === 'd') {
                 this.lastDateValue = this.assignment.dueDate;

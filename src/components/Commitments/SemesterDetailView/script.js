@@ -20,16 +20,14 @@ export default {
         }
     },
     mounted() {
-        this.setupHandlers({
-            update: () => { api.updateSemester(this.semester) },
-            exit: api.updateSemester,
-            change: () => { this.$emit('change', this.semester) },
-            delete: () => { api.deleteSemester(this.semester) }
+        this.setupHandlers('semester', {
+            update: api.updateSemester,
+            delete: api.deleteSemester
         });
     },
     watch: {
         semester(newValue, oldValue) {
-            this.propertyChanged(oldValue);
+            this.handlePropChange(oldValue);
         }
     },
     computed: {

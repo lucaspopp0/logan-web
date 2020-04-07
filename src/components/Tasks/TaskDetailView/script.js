@@ -35,7 +35,7 @@ export default {
     },
     watch: {
         task: function(newTask, oldTask) {
-            this.propertyChanged(oldTask);
+            this.handlePropChange(oldTask);
             
             if (this.dueDateType === 'd') {
                 this.lastDateValue = this.task.dueDate;

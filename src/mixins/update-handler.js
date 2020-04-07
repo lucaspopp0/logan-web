@@ -16,7 +16,7 @@ export default {
             this._timer = new UpdateTimer(options.timeout || 2000, this._performUpdate);
         },
 
-        propertyChanged(oldValue) {
+        handlePropChange(oldValue) {
             if (this._changesPresent) {
                 this._updateFn(oldValue);
             }
