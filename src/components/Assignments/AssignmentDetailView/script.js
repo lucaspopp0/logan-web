@@ -1,12 +1,13 @@
 import CourseSelect from '@/components/Controls/CourseSelect';
 import moment from 'moment';
-import { UpdateTimer } from '@/utils/timers';
 import api from '@/api';
-import dateUtils, { PICKER_DATE_FORMAT } from '@/utils/dates';
 import { Assignment } from '@/data-types';
+import UpdateHandler from '@/mixins/update-handler';
+import dateUtils, { PICKER_DATE_FORMAT } from '@/utils/dates';
 
 export default {
     name: 'assignment-detail-view',
+    mixins: [UpdateHandler],
     components: { CourseSelect },
     props: {
         assignment: {
@@ -24,21 +25,19 @@ export default {
     },
     data() {
         return {
-            changesPresent: false,
-            timer: undefined,
             lastDateValue: undefined
         }
     },
     mounted() {
-        this.timer = new UpdateTimer(2000, () => { this.update(this.assignment) });
+        this.setupHandlers({
+            update: () => { api.updateAssignment(this.assignment) },
+            exit: api.updateAssignment,
+            change: () => { this.$emit('change', this.assignment) }
+        });
     },
     watch: {
         assignment(newAss, oldAss) {
-            if (this.changesPresent) {
-                this.update(oldAss);
-            }
-
-            this.timer.cancel();
+            this.propertyChanged(oldAss);
 
             if (this.dueDateType === 'd') {
                 this.lastDateValue = this.assignment.dueDate;
@@ -69,34 +68,6 @@ export default {
                 this.assignment.dueDate = moment(newValue, PICKER_DATE_FORMAT);
                 this.lastDateValue = this.assignment.dueDate;
             }
-        }
-    },
-    methods: {
-        update(assignmentToUpdate) {
-            console.log('Attempting to update assignment');
-            this.timer.cancel();
-
-            if (this.changesPresent) {
-                api.updateAssignment(assignmentToUpdate);
-            }
-
-            this.changesPresent = false;
-        },
-        registerChange() {
-            console.log('Assignment changed');
-            this.changesPresent = true;
-
-            if (this.timer.isOn) {
-                this.timer.reset();
-            } else {
-                this.timer.begin();
-            }
-
-            this.$emit('change', this.assignment);
-        },
-        deleteSelf() {
-            this.timer.cancel();
-            this.$emit('delete', this.assignment);
         }
     }
 }
