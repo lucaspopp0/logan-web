@@ -3,7 +3,7 @@
         <div id="primary-container">
             <div id="course-color" :style="{ background: '#' + course.color }"></div>
             <input @input="registerChange" id="name-input" type="text" v-model="course.name" placeholder="Name" :disabled="course.isFake">
-            <button @click="deleteCourse" style="flex-grow: 0; margin: 0px 0px 0px 3px; padding-left: 1em; padding-right: 1em;" class="delete-button" :disabled="course.isFake">Delete<br>Course</button>
+            <button @click="performDelete" style="flex-grow: 0; margin: 0px 0px 0px 3px; padding-left: 1em; padding-right: 1em;" class="delete-button" :disabled="course.isFake">Delete<br>Course</button>
         </div>
         <div id="details-container">
             <div>

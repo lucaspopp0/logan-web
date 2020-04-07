@@ -3,13 +3,14 @@ import api from '@/api';
 import DataManager from '@/data-manager';
 import SectionListItem from '../SectionListItem'
 import SectionDetailView from '../SectionDetailView'
-import { UpdateTimer } from '@/utils/timers';
+import UpdateHandler from '@/mixins/update-handler';
 import { Course, Section } from '@/data-types';
 import { DB_DATETIME_FORMAT } from '@/utils/dates';
 
 export default {
     name: 'course-detail-view',
     components: { SectionListItem, SectionDetailView },
+    mixins: [UpdateHandler],
     props: {
         course: {
             type: Course,
@@ -26,21 +27,18 @@ export default {
     },
     data() {
         return {
-            currentSelection: undefined,
-            changesPresent: false,
-            timer: undefined
+            currentSelection: undefined
         }
     },
     mounted() {
-        this.timer = new UpdateTimer(2000, () => { this.updateCourse(this.course) });
+        this.setupHandlers('course', {
+            update: api.updateCourse,
+            delete: api.deleteCourse
+        });
     },
     watch: {
         course(newValue, oldValue) {
-            if (this.changesPresent) {
-                this.updateCourse(oldValue);
-            }
-
-            this.timer.cancel();
+            this.handlePropChange(oldValue);
 
             if (newValue.sections.length > 0) {
                 this.select(newValue.sections[0]);
@@ -50,25 +48,6 @@ export default {
         }
     },
     methods: {
-        updateCourse(courseToUpdate) {
-            console.log('Attempting to update course');
-            this.timer.cancel();
-
-            if (this.changesPresent) {
-                api.updateCourse(courseToUpdate);
-            }
-
-            this.changesPresent = false;
-        },
-        registerChange() {
-            console.log('Course changed');
-            this.changesPresent = true;
-
-            if (this.timer.isOn) this.timer.reset();
-            else this.timer.begin();
-
-            this.$emit('change', this.course);
-        },
         select(section) {
             this.currentSelection = section;
         },
@@ -89,11 +68,6 @@ export default {
         },
         deleteSection(section) {
             this.course.sections.splice(this.course.sections.indexOf(section), 1);
-        },
-        deleteCourse() {
-            this.timer.cancel();
-            this.$emit('delete');
-            api.deleteCourse(this.course);
         }
     }
 }
