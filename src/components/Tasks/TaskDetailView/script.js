@@ -1,13 +1,14 @@
 import CourseSelect from '@/components/Controls/CourseSelect';
 import moment from 'moment';
-import { UpdateTimer } from '@/utils/timers.js';
 import api from '@/api';
 import { PICKER_DATE_FORMAT } from '@/utils/dates';
 import { Task } from '@/data-types';
+import UpdateHandler from '@/utils/update-handler';
 
 export default {
     name: 'task-detail-view',
     components: { CourseSelect },
+    mixins: [UpdateHandler],
     props: {
         task: {
             type: Task,
@@ -26,21 +27,19 @@ export default {
     },
     data() {
         return {
-            changesPresent: false,
-            timer: undefined,
             lastDateValue: undefined
         }
     },
     mounted() {
-        this.timer = new UpdateTimer(2000, () => { this.updateTask(this.task) });
+        this.setup({
+            updateHandler: () => { api.updateTask(this.task) },
+            exitHandler: api.updateTask,
+            changeHandler: () => { this.$emit('change', this.task) }
+        });
     },
     watch: {
         task: function(newTask, oldTask) {
-            if (this.changesPresent) {
-                this.updateTask(oldTask);
-            }
-
-            this.timer.cancel();
+            this.propertyChanged(oldTask);
             
             if (this.dueDateType === 'd') {
                 this.lastDateValue = this.task.dueDate;
@@ -71,34 +70,6 @@ export default {
                 this.task.dueDate = moment(newValue, PICKER_DATE_FORMAT);
                 this.lastDateValue = this.task.dueDate;
             }
-        }
-    },
-    methods: {
-        updateTask(taskToUpdate) {
-            console.log('Attempting update');
-            this.timer.cancel();
-
-            if (this.changesPresent) {
-                api.updateTask(taskToUpdate);
-            }
-
-            this.changesPresent = false;
-        },
-        registerChange() {
-            console.log('Changed');
-            this.changesPresent = true;
-
-            if (this.timer.isOn) {
-                this.timer.reset();
-            } else {
-                this.timer.begin();
-            }
-
-            this.$emit('change', this.task);
-        },
-        deleteTask() {
-            this.timer.cancel();
-            this.$emit('delete');
         }
     }
 }
