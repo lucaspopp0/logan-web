@@ -8,10 +8,9 @@ export default {
 
     methods: {
 
-        setupHandlers(options) {
+        setupHandlers(prop, options) {
+            this._prop = prop;
             this._updateFn = options.update || (() => {});
-            this._exitFn = options.exit || (() => {});
-            this._changeFn = options.change || (() => {});
             this._deleteFn = options.delete || (() => {});
 
             this._timer = new UpdateTimer(options.timeout || 2000, this._performUpdate);
@@ -19,7 +18,7 @@ export default {
 
         propertyChanged(oldValue) {
             if (this._changesPresent) {
-                this._exitFn(oldValue);
+                this._updateFn(oldValue);
             }
 
             this._timer.cancel();
@@ -30,7 +29,7 @@ export default {
             this._timer.cancel();
             
             if (this._changesPresent) {
-                this._updateFn();
+                this._updateFn(this[this._prop]);
             }
 
             this._changesPresent = false;
@@ -42,12 +41,12 @@ export default {
             if (this._timer.isOn) this._timer.reset();
             else this._timer.begin();
 
-            this._changeFn();
+            this.$emit('change', this[this._prop])
         },
 
         performDelete() {
             this._timer.cancel();
-            this.$emit('delete');
+            this.$emit('delete', this[this._prop]);
             this._deleteFn();
         }
 

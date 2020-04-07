@@ -31,11 +31,7 @@ export default {
         }
     },
     mounted() {
-        this.setupHandlers({
-            update: () => { api.updateTask(this.task) },
-            exit: api.updateTask,
-            change: () => { this.$emit('change', this.task) }
-        });
+        this.setupHandlers('task', { update: api.updateTask });
     },
     watch: {
         task: function(newTask, oldTask) {

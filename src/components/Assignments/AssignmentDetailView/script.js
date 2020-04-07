@@ -29,11 +29,7 @@ export default {
         }
     },
     mounted() {
-        this.setupHandlers({
-            update: () => { api.updateAssignment(this.assignment) },
-            exit: api.updateAssignment,
-            change: () => { this.$emit('change', this.assignment) }
-        });
+        this.setupHandlers('assignment', { update: api.updateAssignment });
     },
     watch: {
         assignment(newAss, oldAss) {
