@@ -3,7 +3,7 @@ import moment from 'moment';
 import api from '@/api';
 import { PICKER_DATE_FORMAT } from '@/utils/dates';
 import { Task } from '@/data-types';
-import UpdateHandler from '@/utils/update-handler';
+import UpdateHandler from '@/mixins/update-handler';
 
 export default {
     name: 'task-detail-view',

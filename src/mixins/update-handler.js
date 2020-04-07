@@ -1,4 +1,4 @@
-import { UpdateTimer } from './timers';
+import { UpdateTimer } from '@/utils/timers';
 
 export default {
 
