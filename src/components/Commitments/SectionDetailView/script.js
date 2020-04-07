@@ -1,13 +1,13 @@
-import Vue from 'vue';
 import moment from 'moment';
 import DOWPicker from '@/components/Controls/DOWPicker';
-import { UpdateTimer } from '@/utils/timers';
+import UpdateHandler from '@/mixins/update-handler';
 import api from '@/api';
 import { Section } from '@/data-types';
-import { PICKER_DATE_FORMAT, DB_DATETIME_FORMAT } from '@/utils/dates';
+import { PICKER_DATE_FORMAT } from '@/utils/dates';
 
 export default {
     name: 'section-detail-view',
+    mixins: [UpdateHandler],
     components: { DowPicker: DOWPicker },
     props: {
         section: {
@@ -25,22 +25,15 @@ export default {
             }
         }
     },
-    data() {
-        return {
-            changesPresent: false,
-            timer: undefined
-        }
-    },
     mounted() {
-        this.timer = new UpdateTimer(2000, () => { this.updateSection(this.section) });
+        this.setupHandlers('section', {
+            update: api.updateSection,
+            delete: api.deleteSection
+        })
     },
     watch: {
         section(newSection, oldSection) {
-            if (this.changesPresent) {
-                this.updateSection(oldSection);
-            }
-
-            this.timer.cancel();
+            this.handlePropChange(oldSection);
         }
     },
     computed: {
@@ -99,32 +92,6 @@ export default {
                 mEnd.set({ hour: nEnd.hour(), minute: nEnd.minute() });
                 this.section.end = mEnd;
             }
-        }
-    },
-    methods: {
-        updateSection(section) {
-            console.log('Attempting to update section');
-            this.timer.cancel();
-
-            if (this.changesPresent) {
-                api.updateSection(section);
-            }
-
-            this.changesPresent = false;
-        },
-        registerChange() {
-            console.log('Section changed');
-            this.changesPresent = true;
-
-            if (this.timer.isOn) this.timer.reset();
-            else this.timer.begin();
-
-            this.$emit('change', this.section);
-        },
-        deleteSection() {
-            this.timer.cancel();
-            this.$emit('delete');
-            api.deleteSection(this.section);
         }
     }
 }
