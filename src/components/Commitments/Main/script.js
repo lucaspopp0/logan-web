@@ -42,6 +42,20 @@ export default {
                 }
             }
         },
+        select(item) {
+            if (item instanceof Semester) {
+                Vue.set(this.currentSelection, 'type', 'semester');
+                Vue.set(this.currentSelection, 'value', item);
+            } else if (item instanceof Course) {
+                Vue.set(this.currentSelection, 'type', 'course');
+                Vue.set(this.currentSelection, 'value', item);
+            } else {
+                this.currentSelection = {
+                    type: undefined,
+                    value: undefined
+                };
+            }
+        },
         selectSemester(semester) {
             Vue.set(this.currentSelection, 'type', 'semester');
             Vue.set(this.currentSelection, 'value', semester);
@@ -49,6 +63,12 @@ export default {
         selectCourse(course) {
             Vue.set(this.currentSelection, 'type', 'course');
             Vue.set(this.currentSelection, 'value', course);
+        },
+        isCurrentSelection(obj) {
+            if (!this.currentSelection) return false;
+            if (this.currentSelection.type == 'course' && obj instanceof Course) return this.currentSelection.value.cid === obj.cid;
+            else if (this.currentSelection.type == 'semester' && obj instanceof Semester) return this.currentSelection.value.sid === obj.sid;
+            else return false;
         },
         dmEvent(event, data) {
             if (event === DataManager.EventType.FETCH_COMPLETE) {

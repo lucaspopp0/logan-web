@@ -2,8 +2,8 @@
     <div id="leftsidebar" class="panel">
         <div id="commitment-list" class="list small-list selectable">
             <div class="list-group" v-for="semester in semesters" :key="semester.sid">
-                <semester-list-item :semester="semester" @click.native="selectSemester(semester)" :class="{ active: semester == currentSelection.value }"></semester-list-item>
-                <course-list-item v-for="course in semester.courses" :key="course.cid" :course="course" @click.native="selectCourse(course)" :class="{ active: course == currentSelection.value }"></course-list-item>
+                <semester-list-item :semester="semester" @click.native="select(semester)" :class="{ active: isCurrentSelection(semester) }"></semester-list-item>
+                <course-list-item v-for="course in semester.courses" :key="course.cid" :course="course" @click.native="select(course)" :class="{ active: isCurrentSelection(course) }"></course-list-item>
             </div>
         </div>
         <div class="action-bar logan-bg">

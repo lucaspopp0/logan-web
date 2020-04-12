@@ -35,6 +35,10 @@ export default {
             update: api.updateCourse,
             delete: api.deleteCourse
         });
+
+        if (this.course.sections.length > 0) {
+            this.select(this.course.sections[0]);
+        }
     },
     watch: {
         course(newValue, oldValue) {

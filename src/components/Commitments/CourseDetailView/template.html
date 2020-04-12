@@ -27,7 +27,7 @@
                 <button class="btn btn-sm btn-light" @click="newSection" :disabled="course.isFake">+</button>
             </div>
             <div class="list small-list selectable">
-                <section-list-item v-for="section of course.sections" :key="section.secid" :section="section" @click.native="select(section)" :class="{ active: section == currentSelection }"></section-list-item>
+                <section-list-item v-for="section of course.sections" :key="section.secid" :section="section" @click.native="select(section)" :class="{ active: currentSelection && section.secid == currentSelection.secid }"></section-list-item>
             </div>
         </div>
         <div class="panel list-detail">
