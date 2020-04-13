@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import DataManager from '@/data-manager';
 import { SemesterDetailView, SemesterListItem, CourseDetailView, CourseListItem } from '../'
-import { UpdateTimer } from '@/utils/timers';
 import moment from 'moment';
 import api from '@/api';
 import { Semester, Course } from '@/data-types';
@@ -11,7 +10,6 @@ export default {
     data() {
         return {
             semesters: [],
-            updateTimer: undefined,
             currentSelection: {
                 type: undefined,
                 value: undefined
@@ -19,8 +17,6 @@ export default {
         }
     },
     mounted() {
-        this.updateTimer = new UpdateTimer(30000, DataManager.fetchAllData);
-
         DataManager.addListener(this);
         
         if (!DataManager.needsFetch()) {
@@ -36,9 +32,9 @@ export default {
 
             if ((this.currentSelection.type == undefined || this.currentSelection.value == undefined) && this.semesters.length > 0) {
                 if (this.semesters[0].courses.length > 0) {
-                    this.selectCourse(this.semesters[0].courses[0])
+                    this.select(this.semesters[0].courses[0])
                 } else {
-                    this.selectSemester(this.semesters[0]);
+                    this.select(this.semesters[0]);
                 }
             }
         },
@@ -88,8 +84,8 @@ export default {
 
             api.addSemester(newSemester)
             .then(response => {
-                this.updateTimer.fire();
                 this.selectSemester(response);
+                DataManager.fetchAllData();
             })
         },
         newCourse() {
@@ -106,23 +102,34 @@ export default {
 
             api.addCourse(newCourse)
             .then(response => {
+                currentSemester.courses.splice(currentSemester.courses.indexOf(newCourse), 1);
+
                 const addedCourse = new Course(response);
                 addedCourse.semester = currentSemester;
-                this.updateTimer.fire();
+
+                currentSemester.courses.push(addedCourse);
+
                 this.selectCourse(addedCourse);
+                DataManager.fetchAllData();
             })
         },
         semesterDeleted() {
             // TODO: Implement
             console.warn('semesterDeleted() not implemented');
         },
-        courseDeleted() {
-            if (this.currentSelection.type === 'course') {
-                const toDelete = this.currentSelection.value;
+        courseDeleted(course) {
+            let courses = course.semester.courses;
+            const ind = courses.indexOf(course);
+            courses.splice(ind, 1);
 
-                toDelete.semester.courses.splice(toDelete.semester.courses.indexOf(toDelete), 1);
-                this.updateData();
+            if (courses.length > 0) {
+                if (ind > 0) this.select(courses[ind - 1]);
+                else this.select(courses[0]);
+            } else {
+                this.select(course.semester);
             }
+
+            this.updateData();
         }
     },
     components: { SemesterDetailView, SemesterListItem, CourseListItem, CourseDetailView }

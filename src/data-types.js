@@ -37,6 +37,8 @@ export class Course extends DBObj {
 
     constructor(obj) {
         super(obj);
+
+        this.sections = this.sections || [];
     }
 
     forDB() {

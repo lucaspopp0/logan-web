@@ -27,8 +27,7 @@ export default {
     },
     mounted() {
         this.setupHandlers('section', {
-            update: api.updateSection,
-            delete: api.deleteSection
+            update: api.updateSection
         })
     },
     watch: {
