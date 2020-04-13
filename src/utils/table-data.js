@@ -44,6 +44,10 @@ class TableData {
         return arr;
     }
 
+    isEmpty() {
+        return this.groups.length == 0;
+    }
+
 }
 
 export default TableData;
