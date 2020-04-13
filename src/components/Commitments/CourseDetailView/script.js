@@ -1,4 +1,3 @@
-import moment from 'moment';
 import api from '@/api';
 import DataManager from '@/data-manager';
 import SectionListItem from '../SectionListItem'
@@ -6,10 +5,11 @@ import SectionDetailView from '../SectionDetailView'
 import { UpdateHandler } from '@/mixins';
 import { Course, Section } from '@/data-types';
 import { DB_DATETIME_FORMAT } from '@/utils/dates';
+import { FallbackLabel } from '@/components/Controls';
 
 export default {
     name: 'course-detail-view',
-    components: { SectionListItem, SectionDetailView },
+    components: { SectionListItem, SectionDetailView, FallbackLabel },
     mixins: [ UpdateHandler ],
     props: {
         course: {

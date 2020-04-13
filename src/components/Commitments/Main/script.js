@@ -1,12 +1,14 @@
 import Vue from 'vue';
 import DataManager from '@/data-manager';
 import { SemesterDetailView, SemesterListItem, CourseDetailView, CourseListItem } from '../'
+import FallbackLabel from '@/components/Controls/FallbackLabel';
 import moment from 'moment';
 import api from '@/api';
 import { Semester, Course } from '@/data-types';
 
 export default {
     name: 'commitments',
+    components: { SemesterDetailView, SemesterListItem, CourseListItem, CourseDetailView, FallbackLabel },
     data() {
         return {
             semesters: [],
@@ -131,6 +133,5 @@ export default {
 
             this.updateData();
         }
-    },
-    components: { SemesterDetailView, SemesterListItem, CourseListItem, CourseDetailView }
+    }
 }

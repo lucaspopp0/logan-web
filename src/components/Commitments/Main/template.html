@@ -1,5 +1,6 @@
 <div id="commitments" class="fullheight">
     <div id="leftsidebar" class="panel">
+        <fallback-label v-if="semesters.length == 0" text="No commitments yet" bg="white"></fallback-label>
         <div id="commitment-list" class="list small-list selectable">
             <div class="list-group" v-for="semester in semesters" :key="semester.sid">
                 <semester-list-item :semester="semester" @click.native="select(semester)" :class="{ active: isCurrentSelection(semester) }"></semester-list-item>
@@ -8,10 +9,11 @@
         </div>
         <div class="action-bar logan-bg">
             <button class="btn btn-light btn-sm" @click="newSemester">New Semester</button>
-            <button class="btn btn-light btn-sm" @click="newCourse" :disabled="!currentSelection.value">New Course</button>
+            <button class="btn btn-light btn-sm" @click="newCourse" :disabled="semesters.length == 0 || !currentSelection.value">New Course</button>
         </div>
     </div>
     <div id="commitment-detail" class="panel list-detail">
+        <fallback-label v-if="!currentSelection.value" text="Nothing selected"></fallback-label>
         <semester-detail-view v-if="currentSelection.type == 'semester'" :semester="currentSelection.value" @delete="semesterDeleted"></semester-detail-view>
         <course-detail-view v-else-if="currentSelection.type == 'course'" :course="currentSelection.value" @delete="courseDeleted"></course-detail-view>
     </div>

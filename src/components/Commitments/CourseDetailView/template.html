@@ -27,11 +27,13 @@
                 <button class="btn btn-sm btn-light" @click="newSection" :disabled="course.isFake">+</button>
             </div>
             <div class="list small-list selectable">
+                <fallback-label v-show="course.sections.length == 0" text="No sections yet" bg="white"></fallback-label>
                 <section-list-item v-for="section of course.sections" :key="section.secid" :section="section" @click.native="select(section)" :class="{ active: isCurrentSelection(section) }"></section-list-item>
             </div>
         </div>
         <div class="panel list-detail">
-            <section-detail-view :section="currentSelection" @delete="deleteSection"></section-detail-view>
+            <fallback-label v-if="!currentSelection" text="Nothing selected"></fallback-label>
+            <section-detail-view v-else :section="currentSelection" @delete="deleteSection"></section-detail-view>
         </div>
     </div>
 </div>
