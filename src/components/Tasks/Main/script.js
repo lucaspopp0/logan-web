@@ -7,45 +7,25 @@ import _ from 'lodash';
 import dateUtils from '@/utils/dates';
 import sortingUtils from '@/utils/sorting';
 import TableData from '@/utils/table-data';
-import { UpdateTimer } from '@/utils/timers';
 import { Task } from '@/data-types';
+import { DMTableController } from '@/mixins';
 
 export default {
     name: 'tasks',
+    mixins: [ DMTableController ],
     components: { TaskListItem, TaskDetailView },
-    data() {
-        return {
-            data: new TableData(),
-            updateTimer: undefined,
-            currentSelection: undefined
-        }
-    },
-    mounted() {
-        this.updateTimer = new UpdateTimer(30000, DataManager.fetchAllData);
-
-        DataManager.addListener(this);
-
-        if (!DataManager.needsFetch()) {
-            this.updateTasks();
-        }
-    },
-    beforeDestroy() {
-        DataManager.removeListener(this);
+    beforeMount() {
+        this.setupController({
+            fetch: DataManager.getTasks
+        });
     },
     methods: {
-        updateTasks() {
-            this.updateTimer.reset();
-            this.sortExistingData(DataManager.getTasks());
-        },
-        sortExistingData(data) {
-            const tempData = new TableData();
-
-            let tempTasks = [...(data || this.data.flat())];
-            tempTasks.sort(sortingUtils.initialTaskSortAlgorithm(false));
+        groupData(tempData, rawTasks) {
+            rawTasks.sort(sortingUtils.initialTaskSortAlgorithm(false));
 
             const now = moment();
 
-            for (const task of tempTasks) {
+            for (const task of rawTasks) {
                 let groupName = 'Undefined';
 
                 if (task.dueDate === 'asap') {
@@ -69,16 +49,10 @@ export default {
             for (let group of tempData.groups) {
                 group.content.sort(sortingUtils.sectionSortTasks);
             }
-
-            this.data = tempData;
         },
-        dmEvent(event, data) {
-            if (event === DataManager.EventType.FETCH_COMPLETE) {
-                this.updateTasks();
-            }
-        },
-        select(task) {
-            this.currentSelection = task;
+        isCurrentSelection(item) {
+            if (!this.currentSelection) return false;
+            return item.tid === this.currentSelection.tid;
         },
         newTask() {
             const newTask = new Task({
@@ -91,31 +65,37 @@ export default {
 
             const flatData = this.data.flat();
             flatData.push(newTask);
-            this.sortExistingData(flatData);
+            this.sortData(flatData);
             this.select(newTask);
 
             api.addTask(newTask)
             .then(response => {
                 newTask.tid = response.tid;
                 this.select(response);
-                this.updateTimer.fire();
+                DataManager.fetchAllData();
             })
         },
         taskUpdated() {
-            this.sortExistingData();
+            this.sortData();
         },
         deleteCurrentTask() {
             if (!this.currentSelection) return;
 
             api.deleteTask(this.currentSelection)
             .then((response) => {
-                this.updateTimer.fire();
+                DataManager.fetchAllData();
             })
 
             const flatData = this.data.flat();
-            flatData.splice(flatData.indexOf(this.currentSelection), 1);
-            this.sortExistingData(flatData);
-            this.select(undefined);
+            const deletedIndex = flatData.indexOf(this.currentSelection);
+            flatData.splice(deletedIndex, 1);
+            this.sortData(flatData);
+
+            if (deletedIndex > 0) {
+                this.select(flatData[deletedIndex - 1]);
+            } else if (deletedIndex < flatData.length) {
+                this.select(flatData[deletedIndex]);
+            }
         },
     }
 }

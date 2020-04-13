@@ -5,7 +5,7 @@
                 <div class="list-header">
                     <span class="list-header-title">{{ group.title }}</span>
                 </div>
-                <task-list-item v-for="task in group.content" :key="task.id" :task="task" @click.native="select(task)" :class="{ active: currentSelection == task }"></task-list-item>
+                <task-list-item v-for="task in group.content" :key="task.id" :task="task" @click.native="select(task)" :class="{ active: isCurrentSelection(task) }"></task-list-item>
             </div>
         </div>
         <div class="action-bar logan-bg">
