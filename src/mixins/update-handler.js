@@ -47,7 +47,11 @@ export default {
         performDelete() {
             this._timer.cancel();
             this.$emit('delete', this[this._prop]);
-            this._deleteFn();
+            this._deleteFn(this[this._prop]);
+        },
+
+        isPreventingFetch() {
+            return this._changesPresent;
         }
 
     },
