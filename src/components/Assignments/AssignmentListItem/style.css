@@ -3,3 +3,8 @@
     justify-content: left;
     align-items: normal !important;
 }
+
+.assignment-list-item > .assignment-commitment {
+    font-size: 0.85em;
+    font-weight: bold;
+}

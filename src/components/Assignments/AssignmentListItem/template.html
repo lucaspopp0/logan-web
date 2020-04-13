@@ -1,17 +1,6 @@
 <div class="assignment-list-item list-item">
-    <!-- Course -->
     <span class="assignment-commitment" v-if="!!assignment.course" :style="{ color: '#' + assignment.course.color }">
         {{ assignment.course.name }}
     </span>
     <a class="assignment-title">{{ assignment.title }}</a>
 </div>
-
-<!-- 
-    const ASSIGNMENT_SCHEMA = joi.object({
-    uid: joi.string().required(),
-    aid: joi.string().required(),
-    title: joi.string().required(),
-    dueDate: joi.string().required(),
-    description: joi.string(),
-    commitmentId: joi.string()
-}); -->
