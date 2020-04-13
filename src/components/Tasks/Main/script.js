@@ -6,7 +6,6 @@ import moment from 'moment';
 import _ from 'lodash';
 import dateUtils from '@/utils/dates';
 import sortingUtils from '@/utils/sorting';
-import TableData from '@/utils/table-data';
 import { Task } from '@/data-types';
 import { DMTableController } from '@/mixins';
 
