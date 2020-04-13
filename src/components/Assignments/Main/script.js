@@ -1,8 +1,7 @@
 import AssignmentListItem from '../AssignmentListItem';
 import AssignmentDetailView from '../AssignmentDetailView';
-import TableData from '@/utils/table-data';
+import FallbackLabel from '@/components/Controls/FallbackLabel';
 import moment from 'moment';
-import Vue from 'vue';
 import DataManager from '@/data-manager';
 import api from '@/api';
 import dateUtils from '@/utils/dates';
@@ -12,7 +11,7 @@ import { DMTableController } from '@/mixins';
 export default {
     name: 'assignments',
     mixins: [ DMTableController ],
-    components: { AssignmentDetailView, AssignmentListItem },
+    components: { AssignmentDetailView, AssignmentListItem, FallbackLabel },
     beforeMount() {
         this.setupController({
             fetch: DataManager.getAssignments
@@ -23,10 +22,10 @@ export default {
             // Sort assignments
             const now = dateUtils.dateOnly(moment());
             
-            // tempAssignments = tempAssignments.filter(assignment => {
-            //     if (assignment.dueDate === 'asap' || assignment.dueDate === 'eventually') return true;
-            //     else return assignment.dueDate.isSameOrAfter(now);
-            // });
+            rawAssignments = rawAssignments.filter(assignment => {
+                if (assignment.dueDate === 'asap' || assignment.dueDate === 'eventually') return true;
+                else return assignment.dueDate.isSameOrAfter(now);
+            });
 
             rawAssignments.sort(dateUtils.compareDueDates);
 
@@ -62,8 +61,20 @@ export default {
         assignmentUpdated() {
             this.sortData();
         },
-        deleteCurrentAssignment() {
-            
+        assignmentDeleted(assignment) {
+            const flatData = this.data.flat();
+            const ind = flatData.indexOf(assignment);
+            if (ind < 0) return;
+            flatData.splice(ind, 1);
+
+            if (flatData.length > 0) {
+                if (ind > 0) this.select(flatData[ind - 1]);
+                else this.select(flatData[0]);
+            } else {
+                this.select(undefined);
+            }
+
+            this.sortData(flatData);
         }
     }
 }

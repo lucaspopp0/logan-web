@@ -1,5 +1,6 @@
 <div id="tasks" class="fullheight">
     <div id="leftsidebar" class="panel">
+        <fallback-label v-show="data.isEmpty()" text="No incomplete tasks" bg="white"></fallback-label>
         <div id="task-list" class="list large-list selectable">
             <div class="list-group" v-for="(group, index) of data.groups" :key="index">
                 <div class="list-header">

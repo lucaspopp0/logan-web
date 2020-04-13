@@ -1,4 +1,4 @@
-import CourseSelect from '@/components/Controls/CourseSelect';
+import { CourseSelect, FallbackLabel } from '@/components/Controls';
 import moment from 'moment';
 import api from '@/api';
 import { PICKER_DATE_FORMAT } from '@/utils/dates';
@@ -7,8 +7,8 @@ import UpdateHandler from '@/mixins/update-handler';
 
 export default {
     name: 'task-detail-view',
-    components: { CourseSelect },
-    mixins: [UpdateHandler],
+    components: { CourseSelect, FallbackLabel },
+    mixins: [ UpdateHandler ],
     props: {
         task: {
             type: Task,

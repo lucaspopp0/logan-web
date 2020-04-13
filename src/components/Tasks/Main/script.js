@@ -8,11 +8,12 @@ import dateUtils from '@/utils/dates';
 import sortingUtils from '@/utils/sorting';
 import { Task } from '@/data-types';
 import { DMTableController } from '@/mixins';
+import { FallbackLabel } from '@/components/Controls';
 
 export default {
     name: 'tasks',
     mixins: [ DMTableController ],
-    components: { TaskListItem, TaskDetailView },
+    components: { TaskListItem, TaskDetailView, FallbackLabel },
     beforeMount() {
         this.setupController({
             fetch: DataManager.getTasks

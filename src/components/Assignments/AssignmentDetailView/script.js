@@ -1,14 +1,14 @@
-import CourseSelect from '@/components/Controls/CourseSelect';
+import { FallbackLabel, CourseSelect } from '@/components/Controls';
 import moment from 'moment';
 import api from '@/api';
 import { Assignment } from '@/data-types';
-import UpdateHandler from '@/mixins/update-handler';
+import { UpdateHandler}  from '@/mixins';
 import dateUtils, { PICKER_DATE_FORMAT } from '@/utils/dates';
 
 export default {
     name: 'assignment-detail-view',
-    mixins: [UpdateHandler],
-    components: { CourseSelect },
+    mixins: [ UpdateHandler ],
+    components: { FallbackLabel, CourseSelect },
     props: {
         assignment: {
             type: Assignment,
@@ -29,7 +29,10 @@ export default {
         }
     },
     mounted() {
-        this.setupHandlers('assignment', { update: api.updateAssignment });
+        this.setupHandlers('assignment', { 
+            update: api.updateAssignment,
+            delete: api.deleteAssignment
+        });
     },
     watch: {
         assignment(newAss, oldAss) {

@@ -1,6 +1,7 @@
 <div id="assignments" class="fullheight">
     <div id="leftsidebar" class="panel">
         <div id="assignments-list" class="list large-list selectable">
+            <fallback-label v-if="data.isEmpty()" text="No upcoming assignments" bg="white"></fallback-label>
             <div class="list-group" v-for="(group, index) of data.groups" :key="index">
                 <div class="list-header">
                     <span class="list-header-title">{{ group.title }}</span>
@@ -13,6 +14,6 @@
         </div>
     </div>
     <div id="assignment-detail" class="panel list-detail">
-        <assignment-detail-view class="fullheight" :assignment="currentSelection" @delete="deleteCurrentAssignment" @change="assignmentUpdated"></assignment-detail-view>
+        <assignment-detail-view class="fullheight" :assignment="currentSelection" @delete="assignmentDeleted" @change="assignmentUpdated"></assignment-detail-view>
     </div>
 </div>

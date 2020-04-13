@@ -1,33 +1,39 @@
 <div class="assignment-detail-view">
-    <div class="list-detail">
-        <div class="section">
-            <div>
-                <textarea @input="registerChange" id="title-input" v-model="assignment.title" :disabled="assignment.isFake" placeholder="Title"></textarea>
-                <textarea @input="registerChange" id="description-input" v-model="assignment.description" :disabled="assignment.isFake" placeholder="Description"></textarea>
+    <fallback-label text="Nothing selected" v-show="assignment.isFake"></fallback-label>
+    <template v-if="!assignment.isFake">
+        <div class="list-detail">
+            <div class="section">
+                <div>
+                    <textarea @input="registerChange" id="title-input" v-model="assignment.title" :disabled="assignment.isFake" placeholder="Title"></textarea>
+                    <textarea @input="registerChange" id="description-input" v-model="assignment.description" :disabled="assignment.isFake" placeholder="Description"></textarea>
+                </div>
+            </div>
+            <div class="section">
+                <table id="props-table">
+                    <tbody>
+                        <tr>
+                            <td>For</td>
+                            <td>
+                                <course-select @input="registerChange" v-model="assignment.course" :disabled="assignment.isFake"></course-select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Due</td>
+                            <td>
+                                <select @change="registerChange" v-model="dueDateType" :disabled="assignment.isFake">
+                                    <option value="d">On date...</option>
+                                    <option value="a">ASAP</option>
+                                    <option value="e">Eventually</option>
+                                </select>
+                                <input @input="registerChange" type="date" v-model="dueDateValue" v-if="dueDateType == 'd'" :disabled="assignment.isFake">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="section">
-            <table id="props-table">
-                <tbody>
-                    <tr>
-                        <td>For</td>
-                        <td>
-                            <course-select @input="registerChange" v-model="assignment.course" :disabled="assignment.isFake"></course-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Due</td>
-                        <td>
-                            <select @change="registerChange" v-model="dueDateType" :disabled="assignment.isFake">
-                                <option value="d">On date...</option>
-                                <option value="a">ASAP</option>
-                                <option value="e">Eventually</option>
-                            </select>
-                            <input @input="registerChange" type="date" v-model="dueDateValue" v-if="dueDateType == 'd'" :disabled="assignment.isFake">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="delete-container" v-show="!assignment.isFake">
+            <button class="delete-button" @click="performDelete">Delete assignment</button>
         </div>
-    </div>
+    </template>
 </div>

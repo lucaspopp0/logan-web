@@ -1,48 +1,51 @@
 <div class="task-detail-view">
-    <div class="list-detail">
-        <div class="section">
-            <div>
-                <textarea @input="registerChange" id="title-input" v-model="task.title" :disabled="task.isFake" placeholder="Title"></textarea>
-                <textarea @input="registerChange" id="description-input" v-model="task.description" :disabled="task.isFake" placeholder="Description"></textarea>
+    <fallback-label v-show="task.isFake" text="Nothing selected"></fallback-label>
+    <template v-if="!task.isFake">
+        <div class="list-detail">
+            <div class="section">
+                <div>
+                    <textarea @input="registerChange" id="title-input" v-model="task.title" :disabled="task.isFake" placeholder="Title"></textarea>
+                    <textarea @input="registerChange" id="description-input" v-model="task.description" :disabled="task.isFake" placeholder="Description"></textarea>
+                </div>
+            </div>
+            <div class="section">
+                <table id="props-table">
+                    <tbody>
+                        <tr>
+                            <td>Due</td>
+                            <td>
+                                <select @change="registerChange" v-model="dueDateType" :disabled="task.isFake">
+                                    <option value="d">On date...</option>
+                                    <option value="a">ASAP</option>
+                                    <option value="e">Eventually</option>
+                                </select>
+                                <input @input="registerChange" type="date" v-model="dueDateValue" v-if="dueDateType == 'd'" :disabled="task.isFake">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>For</td>
+                            <td>
+                                <course-select @input="registerChange" v-model="task.course" :disabled="task.isFake"></course-select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Priority</td>
+                            <td>
+                                <select @change="registerChange" v-model.number="task.priority" :disabled="task.isFake">
+                                    <option value=2>Really high</option>
+                                    <option value=1>High</option>
+                                    <option value=0>Normal</option>
+                                    <option value=-1>Low</option>
+                                    <option value=-2>Really low</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="section">
-            <table id="props-table">
-                <tbody>
-                    <tr>
-                        <td>Due</td>
-                        <td>
-                            <select @change="registerChange" v-model="dueDateType" :disabled="task.isFake">
-                                <option value="d">On date...</option>
-                                <option value="a">ASAP</option>
-                                <option value="e">Eventually</option>
-                            </select>
-                            <input @input="registerChange" type="date" v-model="dueDateValue" v-if="dueDateType == 'd'" :disabled="task.isFake">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>For</td>
-                        <td>
-                            <course-select @input="registerChange" v-model="task.course" :disabled="task.isFake"></course-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Priority</td>
-                        <td>
-                            <select @change="registerChange" v-model.number="task.priority" :disabled="task.isFake">
-                                <option value=2>Really high</option>
-                                <option value=1>High</option>
-                                <option value=0>Normal</option>
-                                <option value=-1>Low</option>
-                                <option value=-2>Really low</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="delete-container">
+            <button class="delete-button" @click="performDelete">Delete task</button>
         </div>
-    </div>
-    <div class="delete-container">
-        <button class="delete-button" @click="performDelete">Delete task</button>
-    </div>
+    </template>
 </div>
