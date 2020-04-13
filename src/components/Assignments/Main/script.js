@@ -7,53 +7,31 @@ import DataManager from '@/data-manager';
 import api from '@/api';
 import dateUtils from '@/utils/dates';
 import { Assignment } from '@/data-types';
+import { DMTableController } from '@/mixins';
 
 export default {
     name: 'assignments',
+    mixins: [ DMTableController ],
     components: { AssignmentDetailView, AssignmentListItem },
-    data() {
-        return {
-            data: new TableData(),
-            currentSelection: {
-                type: 'none',
-                value: undefined
-            }
-        }
-    },
-    mounted() {
-        DataManager.addListener(this);
-        if (!DataManager.needsFetch()) {
-            this.updateData();
-        }
-    },
-    beforeDestroy() {
-        DataManager.removeListener(this);
+    beforeMount() {
+        this.setupController({
+            fetch: DataManager.getAssignments
+        });
     },
     methods: {
-        dmEvent(event, data) {  
-            if (event === DataManager.EventType.FETCH_COMPLETE) {
-                this.updateData();
-            }
-        },
-        updateData() {
-            this.sortExistingData(DataManager.getAssignments());
-        },
-        sortExistingData(data) {
-            const tempData = new TableData();
-            let tempAssignments = [...(data || this.data.flat())];
-            
+        groupData(tempData, rawAssignments) {
             // Sort assignments
             const now = dateUtils.dateOnly(moment());
             
-            tempAssignments = tempAssignments.filter(assignment => {
-                if (assignment.dueDate === 'asap' || assignment.dueDate === 'eventually') return true;
-                else return assignment.dueDate.isSameOrAfter(now);
-            });
+            // tempAssignments = tempAssignments.filter(assignment => {
+            //     if (assignment.dueDate === 'asap' || assignment.dueDate === 'eventually') return true;
+            //     else return assignment.dueDate.isSameOrAfter(now);
+            // });
 
-            tempAssignments.sort(dateUtils.compareDueDates);
+            rawAssignments.sort(dateUtils.compareDueDates);
 
             // Group assignments
-            for (const assignment of tempAssignments) {
+            for (const assignment of rawAssignments) {
                 if (assignment.dueDate === 'asap') {
                     tempData.addItem('ASAP', assignment);
                 } else if (assignment.dueDate === 'eventually') {
@@ -63,9 +41,7 @@ export default {
                 }
             }
 
-            // Sort groups
-
-            this.data = tempData;
+            // TODO: Sort groups
         },
         newAssignment() {
             const newAssignment = new Assignment({
@@ -80,12 +56,11 @@ export default {
                 DataManager.fetchAllData();
             })
         },
-        select(type, value) {
-            Vue.set(this.currentSelection, 'type', type);
-            Vue.set(this.currentSelection, 'value', value);
+        isCurrentSelection(assignment) {
+            return this.currentSelection && assignment.aid === this.currentSelection.aid;
         },
         assignmentUpdated() {
-            this.sortExistingData();
+            this.sortData();
         },
         deleteCurrentAssignment() {
             

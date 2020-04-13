@@ -5,7 +5,7 @@
                 <div class="list-header">
                     <span class="list-header-title">{{ group.title }}</span>
                 </div>
-                <assignment-list-item v-for="assignment in group.content" :key="assignment.aid" :assignment="assignment" @click.native="select('assignment', assignment)" :class="{ active: currentSelection.value === assignment }"></assignment-list-item>
+                <assignment-list-item v-for="assignment in group.content" :key="assignment.aid" :assignment="assignment" @click.native="select(assignment)" :class="{ active: isCurrentSelection(assignment) }"></assignment-list-item>
             </div>
         </div>
         <div class="action-bar logan-bg">
@@ -13,6 +13,6 @@
         </div>
     </div>
     <div id="assignment-detail" class="panel list-detail">
-        <assignment-detail-view class="fullheight" :assignment="currentSelection.value" @delete="deleteCurrentAssignment" @change="assignmentUpdated"></assignment-detail-view>
+        <assignment-detail-view class="fullheight" :assignment="currentSelection" @delete="deleteCurrentAssignment" @change="assignmentUpdated"></assignment-detail-view>
     </div>
 </div>
