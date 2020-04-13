@@ -1,4 +1,5 @@
 import api from '@/api'
+import { UpdateTimer } from '@/utils/timers';
 
 const EventType = {
     SIGNIN: 'signin',
@@ -23,6 +24,12 @@ let assignments = [];
 let tasks = [];
 
 let listeners = [];
+
+const updateTimer = new UpdateTimer(30000, () => {
+    if (!listenerPreventingFetch()) {
+        fetchAllData();
+    }
+});
 
 function sendEventToListeners(event, data) {
     for (const listener of listeners) {
@@ -152,6 +159,15 @@ async function fetchAllData() {
     sendEventToListeners(EventType.FETCH_COMPLETE);
 }
 
+function listenerPreventingFetch() {
+    for (const listener of listeners) {
+        if (listener.isPreventingSave && listener.isPreventingFetch()) 
+            return true;
+    }
+
+    return false;
+}
+
 export default {
     addListener: function (listener) {
         listeners.push(listener)
@@ -168,7 +184,7 @@ export default {
     signIn,
     establishAuth,
     fetchCurrentUser,
-    fetchAllData,
+    fetchAllData: () => { updateTimer.fire() },
     getTasks: () => tasks,
     getAssignments: () => assignments,
     getSemesters: () => semesters,
