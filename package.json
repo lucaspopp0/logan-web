@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
+    "dev-rebuild": "node build/dev-server.js --browser-ignore",
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
     "build-for-deployment": "node build/build.js --silentOnSuccess",
