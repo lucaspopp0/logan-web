@@ -28,7 +28,7 @@
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
 
     <!-- Google Sign-In -->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js"></script>
     <meta name="google-signin-client_id" content="261132618985-m4eb9huuqosfddibg17jgm50d69g0ki3.apps.googleusercontent.com">
   </head>
   <body>
