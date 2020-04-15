@@ -12,6 +12,8 @@ const webpack = require('webpack')
 const config = require('../config')
 const webpackConfig = require('./webpack.prod.conf')
 
+const silentOnSuccess = (process.argv.indexOf('-silentOnSuccess') != -1 || process.argv.indexOf('--silentOnSuccess') != -1);
+
 const spinner = ora('building for production...')
 spinner.start()
 
@@ -20,6 +22,9 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
   webpack(webpackConfig, function (err, stats) {
     spinner.stop()
     if (err) throw err
+
+    if (silentOnSuccess) return;
+
     process.stdout.write(stats.toString({
       colors: true,
       modules: false,
