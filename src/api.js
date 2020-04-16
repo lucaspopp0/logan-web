@@ -11,12 +11,13 @@ const client = axios.create({
 
 async function execute(method, path, data, ignoreAuth=false) {
     const params = {
+        headers: { 'Client-Type': 'web' },
         method,
         url: path,
         data
     };
-
-    if (!ignoreAuth) params.headers = { Authorization: `Bearer ${BEARER}` };
+    
+    if (!ignoreAuth) params.headers.Authorization = `Bearer ${BEARER}`;
 
     const response = await client(params);
     return response.data;
