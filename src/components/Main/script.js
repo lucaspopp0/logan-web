@@ -38,6 +38,12 @@ export default {
         },
         sync() {
             DataManager.fetchAllData();
+        },
+        logout() {
+            var auth2 = window.gapi.auth2.getAuthInstance();
+            auth2.signOut().then(() => {
+                console.log('Signed out');
+            })
         }
     }
 }

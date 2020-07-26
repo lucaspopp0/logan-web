@@ -2,7 +2,8 @@ import api from '@/api'
 import { UpdateTimer } from '@/utils/timers';
 
 const EventType = {
-    SIGNIN: 'signin',
+    SIGNIN: 'sign-in',
+    SIGNOUT: 'sign-out',
     FETCH_START: 'fetch-start',
     FETCH_COMPLETE: 'fetch-complete'
 };
