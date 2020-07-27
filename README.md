@@ -1,6 +1,6 @@
 # logan-web
 
-A web frontend for Logan
+A web frontend for Logan. This is an unfinished project.
 
 ## Build Instructions
 
