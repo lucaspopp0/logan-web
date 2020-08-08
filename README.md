@@ -1,6 +1,8 @@
 # logan-web
 
-A web frontend for Logan. This is an unfinished project.
+A web frontend for Logan. This is an unfinished project, and hasn't been updated since early 2020.
+
+This is intended to demonstrate an understanding of development using Vue.
 
 ## Build Instructions
 
